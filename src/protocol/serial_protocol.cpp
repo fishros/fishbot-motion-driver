@@ -6,15 +6,15 @@
  * @copyright 版权所有：FishBot Open Source Organization
  */
 
-#include "fishbot/sdk/protocol/serial_protocol.h"
+#include "fishbot/driver/protocol/serial_protocol.h"
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 
 void SerialProtocol::_initSerialProtocol() {
   boost::system::error_code ec;
   serial_port_.open(protocol_config_.serial_address_, ec);
-  std::cout << "ec:" << ec << std::endl;
+  assert(!ec);
   serial_port_.set_option(
       boost::asio::serial_port_base::baud_rate(protocol_config_.serial_baut_));
   serial_port_.set_option(boost::asio::serial_port_base::character_size(8));
@@ -30,9 +30,11 @@ void SerialProtocol::_initSerialProtocol() {
 
 void SerialProtocol::_recvDataCallback(const boost::system::error_code& error,
                                        size_t bytes_transferred) {
-  print_frame_to_hex((uint8_t*)"frame",
-                     reinterpret_cast<uint8_t*>(recv_data_buffer_),
-                     (uint16_t)bytes_transferred);
+  if (bytes_transferred > 0) {
+    std::string data_str(recv_data_buffer_, bytes_transferred);
+    // 回调数据
+    recv_data_callback_(data_str);
+  }
   _asyncReadSomeData();
 }
 
@@ -55,5 +57,5 @@ int SerialProtocol::ProtocolDestory() {
   return 0;
 }
 
-}  // namespace sdk
+}  // namespace driver
 }  // namespace fishbot

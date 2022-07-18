@@ -1,11 +1,11 @@
-# FishBot SDK
+# FishBot DRIVER
 
-采用C++作为核心语言，对Python进行二次的封装，同时支持对Android、Rust等进行二次封装SDK。
+采用C++作为核心语言，对Python进行二次的封装，同时支持对Android、Rust等进行二次封装DRIVER。
 
 ## 编译与安装
 
 ```
-sudo apt install libboost-dev
+sudo apt install libboost-dev libgtest-dev
 ```
 
 ## 工程结构设计

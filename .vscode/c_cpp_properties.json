@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include/**",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "/mnt/d/Code/GitHub/fishbot-motion-driver/include/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

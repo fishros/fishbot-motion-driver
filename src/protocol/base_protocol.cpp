@@ -5,10 +5,10 @@
  * @date 2022-07-17
  * @copyright 版权所有：FishBot Open Source Organization
  */
-#include "fishbot/sdk/protocol/base_protocol.h"
+#include "fishbot/driver/protocol/base_protocol.h"
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 
 BaseProtocol::BaseProtocol(const ProtocolConfig& protocol_config) {
   protocol_config_ = protocol_config;
@@ -19,5 +19,5 @@ void BaseProtocol::SetDataRecvCallback(
   recv_data_callback_ = callback;
 }
 
-}  // namespace sdk
+}  // namespace driver
 }  // namespace fishbot

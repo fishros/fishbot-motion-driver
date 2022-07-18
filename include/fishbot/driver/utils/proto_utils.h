@@ -5,7 +5,7 @@
 #include <cstdio>
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 #define RX_TX_PACKET_SIZE (128)
 #define FIRST_CODE 0x5A
 #define END_CODE 0x5A
@@ -49,7 +49,7 @@ int inverse_escape_frame(uint8_t* frame, uint8_t* result, int len);
  */
 void print_frame_to_hex(uint8_t* title, uint8_t* buffer, uint16_t size);
 
-}  // namespace sdk
+}  // namespace driver
 }  // namespace fishbot
 
 #endif  // _PROTO_UTILS_H_

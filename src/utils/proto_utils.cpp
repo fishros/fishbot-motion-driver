@@ -6,10 +6,10 @@
  * @copyright 版权所有：FishBot Open Source Organization
  */
 
-#include "fishbot/sdk/utils/proto_utils.h"
+#include "fishbot/driver/utils/proto_utils.h"
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 // ------------------------crc16校验-------
 static const uint16_t crc16tab[256] = {
     0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7, 0x8108,
@@ -104,5 +104,5 @@ void print_frame_to_hex(uint8_t *title, uint8_t *buffer, uint16_t size) {
          title);
 }
 
-}  // namespace sdk
+}  // namespace driver
 }  // namespace fishbot

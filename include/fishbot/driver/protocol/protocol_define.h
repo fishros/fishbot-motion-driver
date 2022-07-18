@@ -5,13 +5,13 @@
  * @date 2022-07-17
  * @copyright 版权所有：FishBot Open Source Organization
  */
-#ifndef _FISHBOT_SDK_PROTOCOL_PROTOCOL_DEFINE_H_
-#define _FISHBOT_SDK_PROTOCOL_PROTOCOL_DEFINE_H_
+#ifndef _FISHBOT_DRIVER_PROTOCOL_PROTOCOL_DEFINE_H_
+#define _FISHBOT_DRIVER_PROTOCOL_PROTOCOL_DEFINE_H_
 #include <functional>
 #include <iostream>
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 
 enum class PROTOCOL_TYPE : int {
   NONE = -1,
@@ -48,6 +48,6 @@ class ProtocolConfig {
   ~ProtocolConfig() = default;
 };
 
-}  // namespace  sdk
+}  // namespace  driver
 }  // namespace fishbot
-#endif  // _FISHBOT_SDK_PROTOCOL_PROTOCOL_DEFINE_H_
+#endif  // _FISHBOT_DRIVER_PROTOCOL_PROTOCOL_DEFINE_H_

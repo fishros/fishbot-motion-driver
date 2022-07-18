@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
  
 # Define project name
-project(fishbot_motion_sdk)
+project(fishbot_motion_driver)
 
 add_compile_options(-Werror)
 add_compile_options(-Wall)

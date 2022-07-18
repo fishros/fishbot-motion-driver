@@ -10,11 +10,11 @@
 #include <iostream>
 #include <string>
 
-#include "fishbot/sdk/protocol/base_protocol.h"
-#include "fishbot/sdk/utils/proto_utils.h"
+#include "fishbot/driver/protocol/base_protocol.h"
+#include "fishbot/driver/utils/proto_utils.h"
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 
 class SerialProtocol : public BaseProtocol {
  private:
@@ -38,6 +38,6 @@ class SerialProtocol : public BaseProtocol {
   boost::asio::io_service io_service_;
   boost::asio::serial_port serial_port_;
 };
-}  // namespace sdk
+}  // namespace driver
 }  // namespace fishbot
 #endif  // _COMMUNICATE_SERIAL_COMMUNICATE_H_

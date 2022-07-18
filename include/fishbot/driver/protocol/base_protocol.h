@@ -5,16 +5,16 @@
  * @date 2022-07-17
  * @copyright 版权所有：FishBot Open Source Organization
  */
-#ifndef _FISHBOT_SDK_PROTOCOL_BASE_PROTOCOL_H_
-#define _FISHBOT_SDK_PROTOCOL_BASE_PROTOCOL_H_
+#ifndef _FISHBOT_DRIVER_PROTOCOL_BASE_PROTOCOL_H_
+#define _FISHBOT_DRIVER_PROTOCOL_BASE_PROTOCOL_H_
 #include <functional>
 #include <iostream>
 #include <string>
 
-#include "fishbot/sdk/protocol/protocol_define.h"
+#include "fishbot/driver/protocol/protocol_define.h"
 
 namespace fishbot {
-namespace sdk {
+namespace driver {
 
 class BaseProtocol {
  protected:
@@ -32,6 +32,6 @@ class BaseProtocol {
 };
 
 
-}  // namespace  sdk
+}  // namespace  driver
 }  // namespace fishbot
-#endif  // _FISHBOT_SDK_PROTOCOL_BASE_PROTOCOL_H_
+#endif  // _FISHBOT_DRIVER_PROTOCOL_BASE_PROTOCOL_H_

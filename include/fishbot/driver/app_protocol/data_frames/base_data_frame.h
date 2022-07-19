@@ -8,21 +8,20 @@
 #ifndef _FISHBOT_DRIVER_APP_PROTOCOL_BASE_DATA_FRAME_H_
 #define _FISHBOT_DRIVER_APP_PROTOCOL_BASE_DATA_FRAME_H_
 
-#include <cstdint>
 #include <string>
+
+#include "fishbot/driver/app_protocol/proto/proto_define.h"
 
 namespace fishbot {
 namespace driver {
 
 class BaseDataFrame {
  private:
-  uint8_t data_id_;       // 数据ID
-  uint16_t data_len_;     // 数据长度
-  uint8_t data_operate_;  // 数据操作
-  std::string data_;      // 数据
+  proto_data_header_t header;  // 数据头
+  std::string data_;           // 数据
  public:
   BaseDataFrame(const std::string& data) { data_ = data; }
-  ~BaseDataFrame();
+  ~BaseDataFrame() = default;
 };
 
 }  // namespace driver

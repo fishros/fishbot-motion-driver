@@ -18,7 +18,7 @@ namespace driver {
  * @param len 数组长度
  * @return uint16_t
  */
-uint16_t crc16(uint8_t* buf, int len);
+uint16_t crc16(const uint8_t* buf, int len);
 
 /**
  * @brief 将数据进行转义
@@ -38,7 +38,7 @@ int escape_frame(uint8_t* frame, uint8_t* result, int len);
  * @param len 长度
  * @return int
  */
-int inverse_escape_frame(uint8_t* frame, uint8_t* result, int len);
+int inverse_escape_frame(const uint8_t* frame, uint8_t* result, int len);
 
 /**
  * @brief 将数据帧打印成hex形式
@@ -47,7 +47,7 @@ int inverse_escape_frame(uint8_t* frame, uint8_t* result, int len);
  * @param buffer 数据
  * @param size 长度
  */
-void print_frame_to_hex(uint8_t* title, uint8_t* buffer, uint16_t size);
+void print_frame_to_hex(const char* title, const char* buffer, uint16_t size);
 
 }  // namespace driver
 }  // namespace fishbot

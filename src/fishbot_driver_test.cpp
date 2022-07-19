@@ -16,7 +16,7 @@ TEST(TestFishBotDriver, TestReadFrame) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyS16";
+  proto_config.serial_address_ = "/dev/ttyUSB0";
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);

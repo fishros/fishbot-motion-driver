@@ -42,7 +42,7 @@ static const uint16_t crc16tab[256] = {
     0xdf7c, 0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
     0x2e93, 0x3eb2, 0x0ed1, 0x1ef0};
 
-uint16_t crc16(uint8_t *buf, int len) {
+uint16_t crc16(const uint8_t *buf, int len) {
   int counter;
   uint16_t crc = 0;
   for (counter = 0; counter < len; counter++)
@@ -70,7 +70,7 @@ int escape_frame(uint8_t *frame, uint8_t *result, int len) {
   return j;
 }
 
-int inverse_escape_frame(uint8_t *frame, uint8_t *result, int len) {
+int inverse_escape_frame(const uint8_t *frame, uint8_t *result, int len) {
   uint16_t i = 0, j = 0;
   result[j++] = FIRST_CODE;
   for (i = 1; i < len - 1; i++) {
@@ -90,12 +90,12 @@ int inverse_escape_frame(uint8_t *frame, uint8_t *result, int len) {
   return j;
 }
 
-void print_frame_to_hex(uint8_t *title, uint8_t *buffer, uint16_t size) {
+void print_frame_to_hex(const char *title, const char *buffer, uint16_t size) {
   int i;
   printf("*************************start %s*******************************\n",
          title);
   for (i = 1; i <= size; i++) {
-    printf("0x%02X ", buffer[i - 1]);
+    printf("0x%02X ", (uint8_t)buffer[i - 1]);
     if (i % 16 == 0) {
       printf("\n");
     }

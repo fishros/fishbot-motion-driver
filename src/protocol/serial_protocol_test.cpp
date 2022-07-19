@@ -14,7 +14,7 @@ TEST(TestSerialCommunicate, ReadData) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyS16";
+  proto_config.serial_address_ = "/dev/ttyUSB0";
   SerialProtocol protocol(proto_config);
   /*
     关于Lambda:
@@ -27,9 +27,7 @@ TEST(TestSerialCommunicate, ReadData) {
   protocol.SetDataRecvCallback([sum_data_p](const std::string& data) -> void {
     *sum_data_p += data.size();
     // std::cout<<"recv data callback, size:"<<data.size()<<std::endl;
-    // print_frame_to_hex((uint8_t*)"frame",
-    //               reinterpret_cast<uint8_t*>(recv_data_buffer_),
-    //               (uint16_t)bytes_transferred);
+    print_frame_to_hex("frame", data.data(), (uint16_t)data.size());
   });
   sleep(3);
   protocol.ProtocolDestory();

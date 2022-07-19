@@ -13,6 +13,7 @@ namespace driver {
 
 void SerialProtocol::_initSerialProtocol() {
   boost::system::error_code ec;
+  std::cout << "open with" << protocol_config_.serial_address_ << std::endl;
   serial_port_.open(protocol_config_.serial_address_, ec);
   assert(!ec);
   serial_port_.set_option(

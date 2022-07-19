@@ -4,16 +4,14 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include/**",
                 "${workspaceFolder}/include",
-                "/mnt/d/Code/GitHub/fishbot-motion-driver/include/"
+                "${workspaceFolder}/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

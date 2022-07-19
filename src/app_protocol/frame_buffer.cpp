@@ -18,9 +18,9 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
   while (first >= 0 && end > first) {
     std::string raw_data = rx_data_.substr(first, end - first + 1);
     // 反转义
-    int len = inverse_escape_frame(reinterpret_cast<const uint8_t*>(raw_data.data()),
-                                   reinterpret_cast<uint8_t*>(rx_data_temp_),
-                                   raw_data.size());
+    int len = inverse_escape_frame(
+        reinterpret_cast<const uint8_t*>(raw_data.data()),
+        reinterpret_cast<uint8_t*>(rx_data_temp_), raw_data.size());
     // print_frame_to_hex("raw_data", rx_data_temp_, len);
     frames_queue_.push(BaseFrame(std::string(rx_data_temp_, len)));
     first = rx_data_.find('\x5A', end + 1);

@@ -14,7 +14,7 @@ TEST(TestSerialCommunicate, ReadData) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyUSB0";
+  proto_config.serial_address_ = "/dev/ttyS12";
   SerialProtocol protocol(proto_config);
   /*
     关于Lambda:

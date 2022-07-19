@@ -23,3 +23,4 @@ TEST(TestBaseFrame, TestDataParse) {
   EXPECT_FLOAT_EQ(base_frame.IsValidData(), true);
   EXPECT_FLOAT_EQ(base_frame.data_frame_len_, 1);
 }
+

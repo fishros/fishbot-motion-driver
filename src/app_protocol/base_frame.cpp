@@ -23,16 +23,16 @@ int BaseFrame::_parseRawData() {
   // raw data
   frame_index_ = raw_data_[1];
   target_addr_ = raw_data_[2];
-  // 小端模式: 高位在前(低内存)，低位在后(高内存)
+  // 获取CRC数据 小端模式: 高位在前(低内存)，低位在后(高内存)
   crc16_result_ = raw_data_[raw_data_.size() - 2] & 0xFF;
   crc16_result_ |= ((raw_data_[raw_data_.size() - 3] << 8) & 0xFF00);
+  // 获取原生数据域
   raw_data_frames_ = raw_data_.substr(3, raw_data_.size() - 6);
   data_crc_ = crc16(reinterpret_cast<const uint8_t*>(raw_data_frames_.data()),
                     raw_data_frames_.size());
-  std::cout << "data crc:" << data_crc_ << std::endl;
-  if(IsValidData())
-  {
+  if (IsValidData()) {
     data_frame_len_ = raw_data_frames_[0];
+    BaseDataFrame data_frame = BaseDataFrame::ParseDataFrame(raw_data_frames_);
   }
   return 0;
 }

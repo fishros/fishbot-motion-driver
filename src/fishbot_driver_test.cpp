@@ -16,9 +16,35 @@ TEST(TestFishBotDriver, TestReadFrame) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyUSB0";
+  proto_config.serial_address_ = "/dev/ttyS12";
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);
-  //   EXPECT_FLOAT_EQ(sum_data > 0, true);
+  // fishbot_driver.UpdateData();
+  sleep(3);
+}
+
+TEST(TestFishBotDriver, TestReadEncoder) {
+  using namespace fishbot::driver;  // NOLINT
+  FishBotConfig fishbot_config;
+  ProtocolConfig proto_config;
+  proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
+  proto_config.serial_baut_ = 115200;
+  proto_config.serial_address_ = "/dev/ttyS12";
+  fishbot_config.protocol_config_ = proto_config;
+
+  FishBotDriver fishbot_driver(fishbot_config);
+  sleep(10);
+  // EXPECT_EQ(fishbot_driver.recv_queue_.size() > 0, true);
+
+  // while (fishbot_driver.recv_queue_.size() > 0) {
+  //   ProtoFrame frame = fishbot_driver.recv_queue_.front();
+  //   fishbot_driver.recv_queue_.pop();
+  //   EXPECT_EQ(frame.frame_index_ > -1, true);
+  //   EXPECT_EQ(frame.IsValidData(), true);
+  //   EXPECT_EQ(frame.data_frame_len_ > 0, true);
+  //   EXPECT_EQ(frame.data_frames_.size() > 0, true);
+
+  
+  // }
 }

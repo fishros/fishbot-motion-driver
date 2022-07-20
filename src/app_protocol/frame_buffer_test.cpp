@@ -30,3 +30,26 @@ TEST(TestFrame, TestFrameSplit) {
     EXPECT_FLOAT_EQ(frame.raw_data_.size() > 0, 1);
   }
 }
+
+TEST(TestFrame, TestFrameSplitWithNo5ASTART) {
+  using namespace fishbot::driver;  // NOLINT
+  FrameBuffer buffer;
+  std::string raw_data(
+      "\x51\x02\x50\x01\x5A"
+      "\x5A\x02\x02\x51\x02\x50\x0A\x5A"
+      "\x5A\x03\x02\x50\x0A\x50\x05\x5A"
+      "\x5A\x04\x02\x51\x02\x50\x05\x5A",
+      29);
+  buffer.PushRawData(raw_data.substr(0, 13));
+  buffer.PushRawData(raw_data.substr(13, 3));
+  buffer.PushRawData(raw_data.substr(16, 33 - 16));
+  ProtoFrame frame;
+  buffer.GetFrame(frame);
+  print_frame_to_hex("frame", frame.raw_data_.data(), frame.raw_data_.size());
+  // for (int i = 0; i < 3; i++) {
+  //   buffer.GetFrame(frame);
+  //   // print_frame_to_hex("raw_data", frame.raw_data_.data(),
+  //   //                    frame.raw_data_.size());
+  //   EXPECT_FLOAT_EQ(frame.raw_data_.size() > 0, 1);
+  // }
+}

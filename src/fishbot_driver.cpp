@@ -29,21 +29,33 @@ FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
       this->recv_queue_.push(base_frame);
     }
   });
+
+  deal_frame_thread_ = std::thread(std::bind(&FishBotDriver::UpdateData, this));
 }
 
 FishBotDriver::~FishBotDriver() {
+  exit_flag_.store(true);
+  deal_frame_thread_.join();
   if (protocol_) {
     protocol_->ProtocolDestory();
   }
 }
 
 void FishBotDriver::UpdateData() {
-  sleep(2);
-  // recv data
-  while (recv_queue_.size() > 0) {
-    ProtoFrame frame = recv_queue_.front();
-    recv_queue_.pop();
-    std::cout << frame.frame_index_ << std::endl;
+  while (!exit_flag_.load()) {
+    if (recv_queue_.size() > 0) {
+      ProtoFrame frame = recv_queue_.front();
+      recv_queue_.pop();
+      printf("index:%d\n", frame.frame_index_);
+      for (ProtoDataFrame data_frame : frame.data_frames_) {
+        if (data_frame.GetDataId() == DATA_ENCODER) {
+          std::cout << "motor_encoder:"
+                    << data_frame.GetData<proto_motor_encoder_data_t>()
+                           .motor_encoder[0]
+                    << std::endl;
+        }
+      }
+    }
   }
   // update data
   // if register -> callback data(?)

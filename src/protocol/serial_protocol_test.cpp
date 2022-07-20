@@ -26,10 +26,9 @@ TEST(TestSerialCommunicate, ReadData) {
   int* sum_data_p = &sum_data;
   protocol.SetDataRecvCallback([sum_data_p](const std::string& data) -> void {
     *sum_data_p += data.size();
-    // std::cout<<"recv data callback, size:"<<data.size()<<std::endl;
     print_frame_to_hex("frame", data.data(), (uint16_t)data.size());
   });
   sleep(3);
   protocol.ProtocolDestory();
-  EXPECT_FLOAT_EQ(sum_data > 0, true);
+  EXPECT_EQ(sum_data > 0, true);
 }

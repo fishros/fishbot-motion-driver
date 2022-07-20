@@ -34,6 +34,10 @@ class ProtoFrame {
     frame_index_ = base_frame.frame_index_;
     target_addr_ = base_frame.target_addr_;
     crc16_result_ = base_frame.crc16_result_;
+    data_crc_ = base_frame.data_crc_;
+    data_frame_len_ = base_frame.data_frame_len_;
+    raw_data_frames_ = base_frame.raw_data_frames_;
+    data_frames_ = base_frame.data_frames_;
     return *this;
   }
 

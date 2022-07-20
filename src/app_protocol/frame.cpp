@@ -33,6 +33,9 @@ int ProtoFrame::_parseRawData() {
   if (IsValidData()) {
     data_frame_len_ = raw_data_frames_[0];
     data_frames_ = ProtoDataFrame::ParseDataFrame(raw_data_frames_);
+  } else {
+    print_frame_to_hex("errorcrc frame", raw_data_.data(), raw_data_.size());
+    return -1;
   }
   return 0;
 }

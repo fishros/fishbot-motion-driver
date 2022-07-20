@@ -23,10 +23,13 @@ class ProtoDataFrame {
   std::string raw_data_;        // 原始数据
  public:
   ProtoDataFrame(const std::string& raw_data);
+  ProtoDataFrame() = default;
   ~ProtoDataFrame() = default;
   std::string GetRawData() { return raw_data_; };
 
   proto_data_header_t GetHeader();
+  proto_data_id_t GetDataId();
+
   /**
    * @brief 获取对应ID类型的数据
    *

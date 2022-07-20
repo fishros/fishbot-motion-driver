@@ -18,15 +18,19 @@ TEST(TestProtoDataFrame, TestDataParse) {
       "\x01\x08\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00"
       "\x01\x08\x00\x01\x01\x02\x00\x00\x00\x00\x00\x00",
       26 - 1);
-  std::vector<ProtoDataFrame> data_frames = ProtoDataFrame::ParseDataFrame(data);
+  std::vector<ProtoDataFrame> data_frames =
+      ProtoDataFrame::ParseDataFrame(data);
   EXPECT_FLOAT_EQ(data_frames.size(), 0x02);
   EXPECT_FLOAT_EQ(data_frames[0].header_.data_id, 0x01);
   EXPECT_FLOAT_EQ(data_frames[0].header_.data_direction, 0x01);
   EXPECT_FLOAT_EQ(data_frames[0].header_.data_len, 0x08);
 
-  proto_motor_encoder_data_t encoder =
+  proto_motor_encoder_data_t encoder0 =
       data_frames[0].GetData<proto_motor_encoder_data_t>();
-  EXPECT_FLOAT_EQ(encoder.motor_encoder[0], 0x00);
+  EXPECT_FLOAT_EQ(encoder0.motor_encoder[0], 0x00);
+  proto_motor_encoder_data_t encoder1 =
+      data_frames[1].GetData<proto_motor_encoder_data_t>();
+  EXPECT_FLOAT_EQ(encoder1.motor_encoder[0], 513);
 
   // EncoderDataFrame* ef = static_cast<EncoderDataFrame*>(&data_frames[0]);
   // EXPECT_FLOAT_EQ(ef->encoder_data_.motor_encoder[0], 0x00);

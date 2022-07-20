@@ -15,6 +15,12 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
   rx_data_.append(raw_data);
   int first = rx_data_.find('\x5A');
   int end = rx_data_.find('\x5A', first + 1);
+
+  if (end - first == 1) {
+    first = end;
+    end = rx_data_.find('\x5A', first + 1);
+  }
+
   while (first >= 0 && end > first) {
     std::string raw_data = rx_data_.substr(first, end - first + 1);
     // 反转义
@@ -22,9 +28,17 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
         reinterpret_cast<const uint8_t*>(raw_data.data()),
         reinterpret_cast<uint8_t*>(rx_data_temp_), raw_data.size());
     // print_frame_to_hex("raw_data", rx_data_temp_, len);
-    frames_queue_.push(ProtoFrame(std::string(rx_data_temp_, len)));
+    ProtoFrame frame = ProtoFrame(std::string(rx_data_temp_, len));
+    if (frame.IsValidData()) {
+      frames_queue_.push(frame);
+    }
     first = rx_data_.find('\x5A', end + 1);
     end = rx_data_.find('\x5A', first + 1);
+
+    // if (end - first == 1) {
+    //   first = end;
+    //   end = rx_data_.find('\x5A', first + 1);
+    // }
   }
   // 擦掉之前的数据
   rx_data_.erase(0, first);

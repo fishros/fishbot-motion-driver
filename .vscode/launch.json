@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/fishbot_motion_driver_test",
             "args": [
-                "--gtest_filter=TestProtoDataFrame.TestDataParse",
+                "--gtest_filter=TestFishBotDriver.TestReadEncoder",
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

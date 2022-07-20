@@ -12,7 +12,7 @@
 #include <queue>
 #include <vector>
 
-#include "fishbot/driver/app_protocol/base_frame.h"
+#include "fishbot/driver/app_protocol/frame.h"
 
 namespace fishbot {
 namespace driver {
@@ -20,11 +20,11 @@ class FrameBuffer {
  private:
   std::string rx_data_;
   char rx_data_temp_[1024];
-  std::queue<BaseFrame> frames_queue_;
+  std::queue<ProtoFrame> frames_queue_;
 
  public:
   int PushRawData(const std::string& raw_data);
-  int GetFrame(BaseFrame& frame);
+  int GetFrame(ProtoFrame& frame);
 
  public:
   FrameBuffer() = default;

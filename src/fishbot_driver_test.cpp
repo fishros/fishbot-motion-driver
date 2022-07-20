@@ -20,7 +20,5 @@ TEST(TestFishBotDriver, TestReadFrame) {
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);
-
-
   //   EXPECT_FLOAT_EQ(sum_data > 0, true);
 }

@@ -21,12 +21,32 @@ FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
     default:
       break;
   }
+
+  protocol_->SetDataRecvCallback([this](const std::string raw_data) -> void {
+    this->frame_buffer_.PushRawData(raw_data);
+    ProtoFrame base_frame;
+    while (this->frame_buffer_.GetFrame(base_frame)) {
+      this->recv_queue_.push(base_frame);
+    }
+  });
 }
 
 FishBotDriver::~FishBotDriver() {
   if (protocol_) {
     protocol_->ProtocolDestory();
   }
+}
+
+void FishBotDriver::UpdateData() {
+  sleep(2);
+  // recv data
+  while (recv_queue_.size() > 0) {
+    ProtoFrame frame = recv_queue_.front();
+    recv_queue_.pop();
+    std::cout << frame.frame_index_ << std::endl;
+  }
+  // update data
+  // if register -> callback data(?)
 }
 
 }  // namespace driver

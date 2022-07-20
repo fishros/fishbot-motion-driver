@@ -6,20 +6,20 @@
  * @copyright 版权所有：FishBot Open Source Organization
  */
 
-#include "fishbot/driver/app_protocol/base_frame.h"
+#include "fishbot/driver/app_protocol/frame.h"
 namespace fishbot {
 namespace driver {
 
-BaseFrame::BaseFrame(const std::vector<BaseDataFrame> data_frames) {
+ProtoFrame::ProtoFrame(const std::vector<ProtoDataFrame> data_frames) {
   data_frames_ = data_frames;
 }
 
-BaseFrame::BaseFrame(const std::string& raw_data) {
+ProtoFrame::ProtoFrame(const std::string& raw_data) {
   raw_data_ = raw_data;
   _parseRawData();
 }
 
-int BaseFrame::_parseRawData() {
+int ProtoFrame::_parseRawData() {
   // raw data
   frame_index_ = raw_data_[1];
   target_addr_ = raw_data_[2];
@@ -32,11 +32,11 @@ int BaseFrame::_parseRawData() {
                     raw_data_frames_.size());
   if (IsValidData()) {
     data_frame_len_ = raw_data_frames_[0];
-    BaseDataFrame data_frame = BaseDataFrame::ParseDataFrame(raw_data_frames_);
+    data_frames_ = ProtoDataFrame::ParseDataFrame(raw_data_frames_);
   }
   return 0;
 }
 
-bool BaseFrame::IsValidData() { return data_crc_ == crc16_result_; }
+bool ProtoFrame::IsValidData() { return data_crc_ == crc16_result_; }
 }  // namespace driver
 }  // namespace fishbot

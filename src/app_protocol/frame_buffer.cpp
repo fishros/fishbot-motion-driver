@@ -22,7 +22,7 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
         reinterpret_cast<const uint8_t*>(raw_data.data()),
         reinterpret_cast<uint8_t*>(rx_data_temp_), raw_data.size());
     // print_frame_to_hex("raw_data", rx_data_temp_, len);
-    frames_queue_.push(BaseFrame(std::string(rx_data_temp_, len)));
+    frames_queue_.push(ProtoFrame(std::string(rx_data_temp_, len)));
     first = rx_data_.find('\x5A', end + 1);
     end = rx_data_.find('\x5A', first + 1);
   }
@@ -31,7 +31,7 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
   return 0;
 }
 
-int FrameBuffer::GetFrame(BaseFrame& frame) {
+int FrameBuffer::GetFrame(ProtoFrame& frame) {
   if (!frames_queue_.empty()) {
     frame = frames_queue_.front();
     frames_queue_.pop();

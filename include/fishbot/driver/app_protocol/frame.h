@@ -13,13 +13,13 @@
 #include <iostream>
 #include <vector>
 
-#include "fishbot/driver/app_protocol/data_frames/base_data_frame.h"
+#include "fishbot/driver/app_protocol/data_frame.h"
 #include "fishbot/driver/app_protocol/proto/proto_define.h"
 #include "fishbot/driver/utils/proto_utils.h"
 
 namespace fishbot {
 namespace driver {
-class BaseFrame {
+class ProtoFrame {
  public:
   std::string raw_data_;         // 原始数据
   uint8_t frame_index_;          // 帧序
@@ -28,8 +28,8 @@ class BaseFrame {
   uint16_t data_crc_;            // 对原始数据进行CRC16校验后的结果
   uint16_t data_frame_len_;      // 数据帧的个数
   std::string raw_data_frames_;  // 数据域原始数据
-  std::vector<BaseDataFrame> data_frames_;  // 数据域
-  BaseFrame& operator=(const BaseFrame& base_frame) {
+  std::vector<ProtoDataFrame> data_frames_;  // 数据域
+  ProtoFrame& operator=(const ProtoFrame& base_frame) {
     raw_data_ = base_frame.raw_data_;
     frame_index_ = base_frame.frame_index_;
     target_addr_ = base_frame.target_addr_;
@@ -41,11 +41,11 @@ class BaseFrame {
   int _parseRawData();
 
  public:
-  BaseFrame(const std::vector<BaseDataFrame> data_frames);
-  BaseFrame(const std::string& raw_data);
+  ProtoFrame(const std::vector<ProtoDataFrame> data_frames);
+  ProtoFrame(const std::string& raw_data);
   bool IsValidData();
-  BaseFrame() = default;
-  ~BaseFrame() = default;
+  ProtoFrame() = default;
+  ~ProtoFrame() = default;
 };
 
 }  // namespace driver

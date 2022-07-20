@@ -22,7 +22,7 @@ TEST(TestFrame, TestFrameSplit) {
   buffer.PushRawData(raw_data.substr(0, 13));
   buffer.PushRawData(raw_data.substr(13, 3));
   buffer.PushRawData(raw_data.substr(16, 33 - 16));
-  BaseFrame frame;
+  ProtoFrame frame;
   for (int i = 0; i < 4; i++) {
     buffer.GetFrame(frame);
     // print_frame_to_hex("raw_data", frame.raw_data_.data(),

@@ -16,7 +16,7 @@ TEST(TestFishBotDriver, TestReadFrame) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyS12";
+  proto_config.serial_address_ = "/dev/ttySttyUSB012";
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);
@@ -30,21 +30,25 @@ TEST(TestFishBotDriver, TestReadEncoder) {
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
   proto_config.serial_baut_ = 115200;
-  proto_config.serial_address_ = "/dev/ttyS12";
+  proto_config.serial_address_ = "/dev/ttyUSB0";
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);
-  sleep(10);
-  // EXPECT_EQ(fishbot_driver.recv_queue_.size() > 0, true);
+  sleep(2);
+}
 
-  // while (fishbot_driver.recv_queue_.size() > 0) {
-  //   ProtoFrame frame = fishbot_driver.recv_queue_.front();
-  //   fishbot_driver.recv_queue_.pop();
-  //   EXPECT_EQ(frame.frame_index_ > -1, true);
-  //   EXPECT_EQ(frame.IsValidData(), true);
-  //   EXPECT_EQ(frame.data_frame_len_ > 0, true);
-  //   EXPECT_EQ(frame.data_frames_.size() > 0, true);
+TEST(TestFishBotDriver, TestSendSpeed) {
+  using namespace fishbot::driver;  // NOLINT
+  FishBotConfig fishbot_config;
+  ProtocolConfig proto_config;
+  proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
+  proto_config.serial_baut_ = 115200;
+  proto_config.serial_address_ = "/dev/ttyUSB0";
+  fishbot_config.protocol_config_ = proto_config;
 
-  
-  // }
+  FishBotDriver fishbot_driver(fishbot_config);
+  // 设置电机0速度为0.05m/s
+  fishbot_driver.GetMotor()->SendMotorSpeed(0, 0.05);
+  fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.06);
+  sleep(1);
 }

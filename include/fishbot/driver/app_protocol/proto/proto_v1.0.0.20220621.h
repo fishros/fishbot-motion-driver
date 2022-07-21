@@ -43,6 +43,7 @@ typedef enum {
  */
 typedef enum {
   DATA_TARGET_ADDR_PC = 0x01,  // 0x01 目标地址电脑
+  DATA_TARGET_ADDR_FBMC = 0x02,  // 0x02 目标地址FishBot运动控制板
 } __attribute__((packed)) proto_data_target_addr_t;
 
 /**
@@ -78,7 +79,7 @@ typedef struct {
  *
  */
 typedef struct {
-  uint16_t motor_speed[MAX_MOTOR_NUM];  // 单位mm/s
+  int16_t motor_speed[MAX_MOTOR_NUM];  // 单位mm/s
 } proto_motor_speed_ctrl_data_t;
 
 /**

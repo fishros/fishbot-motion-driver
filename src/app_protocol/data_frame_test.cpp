@@ -21,9 +21,9 @@ TEST(TestProtoDataFrame, TestDataParse) {
   std::vector<ProtoDataFrame> data_frames =
       ProtoDataFrame::ParseDataFrame(data);
   EXPECT_FLOAT_EQ(data_frames.size(), 0x02);
-  EXPECT_FLOAT_EQ(data_frames[0].header_.data_id, 0x01);
-  EXPECT_FLOAT_EQ(data_frames[0].header_.data_direction, 0x01);
-  EXPECT_FLOAT_EQ(data_frames[0].header_.data_len, 0x08);
+  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_id, 0x01);
+  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_direction, 0x01);
+  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_len, 0x08);
 
   proto_motor_encoder_data_t encoder0 =
       data_frames[0].GetData<proto_motor_encoder_data_t>();

@@ -12,6 +12,31 @@ namespace driver {
 
 ProtoFrame::ProtoFrame(const std::vector<ProtoDataFrame> data_frames) {
   data_frames_ = data_frames;
+  frame_index_ = GetSendFrameIndex();
+  target_addr_ = DATA_TARGET_ADDR_FBMC;  // 目标地址运动控制板
+  data_frame_len_ = data_frames.size();
+  raw_data_frames_ = std::string(data_frame_len_, 1);
+  for (ProtoDataFrame data_frame : data_frames) {
+    raw_data_frames_.append(data_frame.GetRawData().data(),
+                            data_frame.GetRawData().size());
+  }
+  data_crc_ = crc16(reinterpret_cast<const uint8_t*>(raw_data_frames_.data()),
+                    raw_data_frames_.size());
+  crc16_result_ = data_crc_;
+
+  raw_data_.erase();
+  char data_temp[1024];
+  int frame_len = 0;
+  data_temp[frame_len++] = 0x5A;
+  data_temp[frame_len++] = frame_index_;
+  data_temp[frame_len++] = target_addr_;
+  std::memcpy(data_temp + frame_len, raw_data_frames_.data(),
+              raw_data_frames_.size());
+  frame_len += raw_data_frames_.size();
+  data_temp[frame_len++] = crc16_result_ >> 8;
+  data_temp[frame_len++] = crc16_result_;
+  data_temp[frame_len++] = 0x5A;
+  raw_data_ = std::string(data_temp, frame_len);
 }
 
 ProtoFrame::ProtoFrame(const std::string& raw_data) {
@@ -19,17 +44,23 @@ ProtoFrame::ProtoFrame(const std::string& raw_data) {
   _parseRawData();
 }
 
+uint8_t ProtoFrame::GetSendFrameIndex() {
+  static uint8_t send_frame_index = 0;  // 发送数据帧的计数
+  return send_frame_index++;
+}
+
+std::string ProtoFrame::GetRawData() { return raw_data_; }
+
 int ProtoFrame::_parseRawData() {
-  // raw data
-  frame_index_ = raw_data_[1];
-  target_addr_ = raw_data_[2];
-  // 获取CRC数据 小端模式: 高位在前(低内存)，低位在后(高内存)
-  crc16_result_ = raw_data_[raw_data_.size() - 2] & 0xFF;
-  crc16_result_ |= ((raw_data_[raw_data_.size() - 3] << 8) & 0xFF00);
+  frame_index_ = raw_data_[1];  // 数据帧号
+  target_addr_ = raw_data_[2];  // 目标地址
+  SET_SUB_BYTES1(crc16_result_, raw_data_[raw_data_.size() - 2]);
+  SET_SUB_BYTES2(crc16_result_, raw_data_[raw_data_.size() - 3]);
   // 获取原生数据域
   raw_data_frames_ = raw_data_.substr(3, raw_data_.size() - 6);
   data_crc_ = crc16(reinterpret_cast<const uint8_t*>(raw_data_frames_.data()),
                     raw_data_frames_.size());
+  // 有效则扔进去
   if (IsValidData()) {
     data_frame_len_ = raw_data_frames_[0];
     data_frames_ = ProtoDataFrame::ParseDataFrame(raw_data_frames_);

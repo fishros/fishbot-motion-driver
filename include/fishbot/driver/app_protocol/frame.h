@@ -20,6 +20,9 @@
 namespace fishbot {
 namespace driver {
 class ProtoFrame {
+ private:
+  int _parseRawData();
+
  public:
   std::string raw_data_;         // 原始数据
   uint8_t frame_index_;          // 帧序
@@ -29,6 +32,17 @@ class ProtoFrame {
   uint16_t data_frame_len_;      // 数据帧的个数
   std::string raw_data_frames_;  // 数据域原始数据
   std::vector<ProtoDataFrame> data_frames_;  // 数据域
+
+ public:
+  bool IsValidData();
+  std::string GetRawData();
+  static uint8_t GetSendFrameIndex();
+
+ public:
+  ProtoFrame(const std::vector<ProtoDataFrame> data_frames);
+  ProtoFrame(const std::string& raw_data);
+  ProtoFrame() = default;
+  ~ProtoFrame() = default;
   ProtoFrame& operator=(const ProtoFrame& base_frame) {
     raw_data_ = base_frame.raw_data_;
     frame_index_ = base_frame.frame_index_;
@@ -40,16 +54,6 @@ class ProtoFrame {
     data_frames_ = base_frame.data_frames_;
     return *this;
   }
-
- private:
-  int _parseRawData();
-
- public:
-  ProtoFrame(const std::vector<ProtoDataFrame> data_frames);
-  ProtoFrame(const std::string& raw_data);
-  bool IsValidData();
-  ProtoFrame() = default;
-  ~ProtoFrame() = default;
 };
 
 }  // namespace driver

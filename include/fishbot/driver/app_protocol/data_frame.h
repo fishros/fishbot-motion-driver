@@ -18,15 +18,17 @@ namespace fishbot {
 namespace driver {
 
 class ProtoDataFrame {
- public:
+ private:
   proto_data_header_t header_;  // 数据头
-  std::string raw_data_;        // 原始数据
+  std::string raw_data_;        // 原始数据，包含头
+  std::string pure_raw_data_;   // 纯原始数据，不包含头
+
  public:
   ProtoDataFrame(const std::string& raw_data);
   ProtoDataFrame() = default;
   ~ProtoDataFrame() = default;
-  std::string GetRawData() { return raw_data_; };
 
+  std::string GetRawData();
   proto_data_header_t GetHeader();
   proto_data_id_t GetDataId();
 
@@ -43,13 +45,22 @@ class ProtoDataFrame {
                 raw_data_.data() + sizeof(proto_data_header_t),
                 raw_data_.size() - sizeof(proto_data_header_t));
     return data;
-  }
-
+  };
+  
   template <typename T>
-  void UpdateData(const T&);
+  void UpdateData(const T& data_struct_t) {
+    header_.data_len = sizeof(T);
+    pure_raw_data_ = std::string(reinterpret_cast<const char*>(&data_struct_t),
+                                 header_.data_len);
+  };
+
+  void UpdateDataHeader(proto_data_id_t data_id,
+                        proto_data_direction_t data_direction = DATA_TO_FBMC,
+                        uint16_t data_len = 0);
 
  public:
-  static std::vector<ProtoDataFrame> ParseDataFrame(const std::string& raw_data);
+  static std::vector<ProtoDataFrame> ParseDataFrame(
+      const std::string& raw_data);
 };
 
 }  // namespace driver

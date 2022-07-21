@@ -31,6 +31,8 @@ FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
   });
 
   deal_frame_thread_ = std::thread(std::bind(&FishBotDriver::UpdateData, this));
+
+  motor_ptr_ = std::make_shared<Motor>(send_queue_);
 }
 
 FishBotDriver::~FishBotDriver() {
@@ -41,24 +43,33 @@ FishBotDriver::~FishBotDriver() {
   }
 }
 
+MotorSharedPtr FishBotDriver::GetMotor() { return motor_ptr_; }
+
 void FishBotDriver::UpdateData() {
   while (!exit_flag_.load()) {
     if (recv_queue_.size() > 0) {
       ProtoFrame frame = recv_queue_.front();
       recv_queue_.pop();
-      printf("index:%d\n", frame.frame_index_);
+      // printf("index:%d\n", frame.frame_index_);
       for (ProtoDataFrame data_frame : frame.data_frames_) {
         if (data_frame.GetDataId() == DATA_ENCODER) {
-          std::cout << "motor_encoder:"
-                    << data_frame.GetData<proto_motor_encoder_data_t>()
-                           .motor_encoder[0]
-                    << std::endl;
+          // std::cout << "motor_encoder:"
+          //           << data_frame.GetData<proto_motor_encoder_data_t>()
+          //                  .motor_encoder[0]
+          //           << std::endl;
+          // TODO(小鱼): 完善数据更新.
+          // call motor update current speed
+          // call odom update pose
+          // if register odom callback , call
         }
       }
     }
+
+    if (send_queue_.size() > 0) {
+      protocol_->ProtocolSendRawData(send_queue_.front().GetRawData());
+      send_queue_.pop();
+    }
   }
-  // update data
-  // if register -> callback data(?)
 }
 
 }  // namespace driver

@@ -29,6 +29,7 @@ class ProtoDataFrame {
   ~ProtoDataFrame() = default;
 
   std::string GetRawData();
+
   proto_data_header_t GetHeader();
   proto_data_id_t GetDataId();
 

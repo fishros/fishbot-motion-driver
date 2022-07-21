@@ -49,6 +49,8 @@ void SerialProtocol::_asyncReadSomeData() {
 int SerialProtocol::ProtocolSendRawData(const std::string& data) {
   std::cout << "send" << data.size() << std::endl;
   print_frame_to_hex("send", data.data(), data.size());
+  // 我是大傻子
+  serial_port_.write_some(boost::asio::buffer(data.data(), data.size()));
   return 0;
 }
 

@@ -66,7 +66,7 @@ void FishBotDriver::UpdateData() {
     }
 
     if (send_queue_.size() > 0) {
-      protocol_->ProtocolSendRawData(send_queue_.front().GetRawData());
+      protocol_->ProtocolSendRawData(send_queue_.front().GetEscapeRawData());
       send_queue_.pop();
     }
   }

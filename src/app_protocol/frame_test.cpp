@@ -18,9 +18,16 @@ TEST(TestProtoFrame, TestDataParse) {
       19 - 1);
   ProtoFrame base_frame(data);
 
-  EXPECT_FLOAT_EQ(base_frame.target_addr_, 0x01);
-  EXPECT_FLOAT_EQ(base_frame.frame_index_, 0xEA);
-  EXPECT_FLOAT_EQ(base_frame.IsValidData(), true);
-  EXPECT_FLOAT_EQ(base_frame.data_frame_len_, 1);
+  EXPECT_FLOAT_EQ(base_frame.target_addr_,0x01);
+  EXPECT_FLOAT_EQ(base_frame.frame_index_,0xEA);
+  EXPECT_TRUE(base_frame.IsValidData());
+  EXPECT_EQ(base_frame.data_frame_len_, 1);
 }
 
+//
+TEST(TestProtoFrame, TestCRC16) {
+  using namespace fishbot::driver;  // NOLINT
+  std::string data("\x01\x03\x04\x00\x02\x5A\x00\x00\x00", 10 - 1);
+  uint16_t result = crc16((uint8_t*)data.data(), data.size());
+  std::cout<<result<<std::endl;
+}

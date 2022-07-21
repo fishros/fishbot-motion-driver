@@ -80,7 +80,7 @@ typedef struct {
  */
 typedef struct {
   int16_t motor_speed[MAX_MOTOR_NUM];  // 单位mm/s
-} proto_motor_speed_ctrl_data_t;
+} __attribute__((packed))  proto_motor_speed_ctrl_data_t;
 
 /**
  * @brief IMU数据结构体

@@ -36,6 +36,12 @@ class ProtoFrame {
  public:
   bool IsValidData();
   std::string GetRawData();
+  /**
+   * @brief 获取数据帧并转义
+   *
+   * @return std::string
+   */
+  std::string GetEscapeRawData();
   static uint8_t GetSendFrameIndex();
 
  public:

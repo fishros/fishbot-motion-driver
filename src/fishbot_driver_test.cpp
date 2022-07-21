@@ -47,8 +47,12 @@ TEST(TestFishBotDriver, TestSendSpeed) {
   fishbot_config.protocol_config_ = proto_config;
 
   FishBotDriver fishbot_driver(fishbot_config);
-  // 设置电机0速度为0.05m/s
-  fishbot_driver.GetMotor()->SendMotorSpeed(0, 0.05);
-  fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.06);
+
+  for (int i = 0; i < 0.3 * 100; i++) {
+    fishbot_driver.GetMotor()->SendMotorSpeed(0, -(float)i / 100);
+    fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.001);
+    sleep(1);
+  }
+  fishbot_driver.GetMotor()->SendMotorSpeed(0, 0.00);
   sleep(1);
 }

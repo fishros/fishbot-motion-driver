@@ -50,7 +50,7 @@ uint16_t crc16(const uint8_t *buf, int len) {
   return crc;
 }
 
-int escape_frame(uint8_t *frame, uint8_t *result, int len) {
+int escape_frame(const uint8_t *frame, uint8_t *result, int len) {
   uint16_t i = 0, j = 0;
   result[j++] = FIRST_CODE;
   for (i = 1; i < len - 1; i++) {

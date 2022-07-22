@@ -72,7 +72,7 @@ TEST(TestFishBotDriver, TestSendSpeed) {
 TEST(TestFishBotDriver, TestSendSpeedByUDP) {
   using namespace fishbot::driver;  // NOLINT
   FishBotConfig fishbot_config;
-  ProtocolConfig proto_config
+  ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
   proto_config.udp_server_ip_ = "0.0.0.0";
   proto_config.udp_server_port_ = 3474;
@@ -81,9 +81,10 @@ TEST(TestFishBotDriver, TestSendSpeedByUDP) {
 
   for (int i = 0; i < 0.3 * 100; i++) {
     fishbot_driver.GetMotor()->SendMotorSpeed(0, static_cast<float>(i) / 100);
-    fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.001);
+    fishbot_driver.GetMotor()->SendMotorSpeed(1, -static_cast<float>(i) / 100);
     sleep(1);
   }
   fishbot_driver.GetMotor()->SendMotorSpeed(0, 0.00);
+  fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.00);
   sleep(1);
 }

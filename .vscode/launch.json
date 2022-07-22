@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/fishbot_motion_driver_test",
             "args": [
-                "--gtest_filter=TestFishBotDriver.TestSendSpeed",
+                "--gtest_filter=TestUdpServerProtocol.ReadData",
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

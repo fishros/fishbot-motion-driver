@@ -53,8 +53,9 @@ std::string ProtoFrame::GetRawData() { return raw_data_; }
 
 std::string ProtoFrame::GetEscapeRawData() {
   uint8_t temp_data[1024];  // 临时
-  int frame_size = escape_frame(reinterpret_cast<const uint8_t*>(raw_data_.data()),
-                                temp_data, raw_data_.size());
+  int frame_size =
+      escape_frame(reinterpret_cast<const uint8_t*>(raw_data_.data()),
+                   temp_data, raw_data_.size());
   return std::string(reinterpret_cast<char*>(temp_data), frame_size);
 }
 

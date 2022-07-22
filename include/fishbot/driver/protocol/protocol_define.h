@@ -38,6 +38,7 @@ class ProtocolConfig {
     serial_baut_ = config.serial_baut_;
     serial_address_ = config.serial_address_;
     udp_server_ip_ = config.udp_server_ip_;
+    udp_server_port_ = config.udp_server_port_;
     tcp_server_ip_ = config.tcp_server_ip_;
     tcp_server_port_ = config.tcp_server_port_;
     return *this;

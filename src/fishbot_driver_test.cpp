@@ -49,7 +49,7 @@ TEST(TestFishBotDriver, TestSendSpeed) {
   FishBotDriver fishbot_driver(fishbot_config);
 
   for (int i = 0; i < 0.3 * 100; i++) {
-    fishbot_driver.GetMotor()->SendMotorSpeed(0, -(float)i / 100);
+    fishbot_driver.GetMotor()->SendMotorSpeed(0, static_cast<float>(i / 100));
     fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.001);
     sleep(1);
   }

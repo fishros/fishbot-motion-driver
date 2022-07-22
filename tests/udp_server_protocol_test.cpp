@@ -24,6 +24,11 @@ void Sender(std::string in, std::string ip, int port) {
   socket.close();
 }
 
+TEST(TestUdpServerProtocol, BoostSendData) {
+  using namespace fishbot::driver;  // NOLINT
+  Sender("\x5A\x01\x02\x51\x02\x50\x01\x5A", "192.168.0.106", 3474);
+}
+
 TEST(TestUdpServerProtocol, ReadData) {
   using namespace fishbot::driver;  // NOLINT
   ProtocolConfig proto_config;
@@ -69,6 +74,6 @@ TEST(TestUdpServerProtocol, ReadDataRemote) {
     print_frame_to_hex("recvframe", data.data(), (uint16_t)data.size());
   });
 
-  sleep(200);
+  sleep(3);
   protocol.ProtocolDestory();
 }

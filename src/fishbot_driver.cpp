@@ -17,7 +17,10 @@ FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
       protocol_ =
           std::make_shared<SerialProtocol>(fishbot_config.protocol_config_);
       break;
-
+    case PROTOCOL_TYPE::UDP_SERVER:
+      protocol_ =
+          std::make_shared<UdpServerProtocol>(fishbot_config.protocol_config_);
+      break;
     default:
       break;
   }
@@ -46,10 +49,12 @@ FishBotDriver::~FishBotDriver() {
 MotorSharedPtr FishBotDriver::GetMotor() { return motor_ptr_; }
 
 void FishBotDriver::UpdateData() {
+  uint32_t frame_count_ = 0;
   while (!exit_flag_.load()) {
-    if (recv_queue_.size() > 0) {
+    if (!recv_queue_.empty()) {
       ProtoFrame frame = recv_queue_.front();
       recv_queue_.pop();
+      frame_count_++;
       // printf("index:%d\n", frame.frame_index_);
       for (ProtoDataFrame data_frame : frame.data_frames_) {
         if (data_frame.GetDataId() == DATA_ENCODER) {
@@ -63,9 +68,10 @@ void FishBotDriver::UpdateData() {
           // if register odom callback , call
         }
       }
+      // printf("frame_conut=%d\n", frame_count_);
     }
 
-    if (send_queue_.size() > 0) {
+    if (!send_queue_.empty()) {
       protocol_->ProtocolSendRawData(send_queue_.front().GetEscapeRawData());
       send_queue_.pop();
     }

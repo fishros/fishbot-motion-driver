@@ -30,5 +30,5 @@ TEST(TestSerialCommunicate, ReadData) {
   });
   sleep(3);
   protocol.ProtocolDestory();
-  EXPECT_TRUE(sum_data > 0);
+  EXPECT_GT(sum_data, 0);
 }

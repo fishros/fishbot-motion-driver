@@ -27,7 +27,7 @@ TEST(TestFrame, TestFrameSplit) {
     buffer.GetFrame(frame);
     // print_frame_to_hex("raw_data", frame.raw_data_.data(),
     //                    frame.raw_data_.size());
-    EXPECT_TRUE(frame.raw_data_.size() > 0);
+    EXPECT_GT(frame.raw_data_.size(), 0);
   }
 }
 

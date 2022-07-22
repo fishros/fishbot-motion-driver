@@ -18,6 +18,7 @@
 #include "fishbot/driver/modules/motor/motor.h"
 #include "fishbot/driver/protocol/base_protocol.h"
 #include "fishbot/driver/protocol/serial_protocol.h"
+#include "fishbot/driver/protocol/udp_server_protocol.h"
 
 namespace fishbot {
 namespace driver {

@@ -34,11 +34,11 @@ int FrameBuffer::PushRawData(const std::string& raw_data) {
     }
     first = rx_data_.find('\x5A', end + 1);
     end = rx_data_.find('\x5A', first + 1);
-
-    // if (end - first == 1) {
-    //   first = end;
-    //   end = rx_data_.find('\x5A', first + 1);
-    // }
+    // 防止错帧
+    if ((first != -1) && (end - first == 1)) {
+      first = end;
+      end = rx_data_.find('\x5A', first);
+    }
   }
   // 擦掉之前的数据
   rx_data_.erase(0, first);

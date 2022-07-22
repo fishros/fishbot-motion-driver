@@ -1,5 +1,5 @@
-#ifndef _COMMUNICATE_SERIAL_COMMUNICATE_H_
-#define _COMMUNICATE_SERIAL_COMMUNICATE_H_
+#ifndef _COMMUNICATE_UDP_SERIAL_COMMUNICATE_H_
+#define _COMMUNICATE_UDP_SERIAL_COMMUNICATE_H_
 #include <unistd.h>
 
 #include <boost/asio.hpp>
@@ -43,4 +43,4 @@ class UdpServerProtocol : public BaseProtocol {
 };
 }  // namespace driver
 }  // namespace fishbot
-#endif  // _COMMUNICATE_SERIAL_COMMUNICATE_H_
+#endif  // _COMMUNICATE_UDP_SERIAL_COMMUNICATE_H_

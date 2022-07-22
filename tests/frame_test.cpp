@@ -18,8 +18,8 @@ TEST(TestProtoFrame, TestDataParse) {
       19 - 1);
   ProtoFrame base_frame(data);
 
-  EXPECT_FLOAT_EQ(base_frame.target_addr_, 0x01);
-  EXPECT_FLOAT_EQ(base_frame.frame_index_, 0xEA);
+  EXPECT_EQ(base_frame.target_addr_, 0x01);
+  EXPECT_EQ(base_frame.frame_index_, 0xEA);
   EXPECT_TRUE(base_frame.IsValidData());
   EXPECT_EQ(base_frame.data_frame_len_, 1);
 }

@@ -51,7 +51,6 @@ TEST(TestUdpServerProtocol, ReadData) {
   protocol.ProtocolDestory();
 }
 
-
 TEST(TestUdpServerProtocol, ReadDataRemote) {
   using namespace fishbot::driver;  // NOLINT
   ProtocolConfig proto_config;
@@ -69,7 +68,6 @@ TEST(TestUdpServerProtocol, ReadDataRemote) {
   protocol.SetDataRecvCallback([](const std::string& data) -> void {
     print_frame_to_hex("recvframe", data.data(), (uint16_t)data.size());
   });
-
 
   sleep(200);
   protocol.ProtocolDestory();

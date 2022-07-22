@@ -21,12 +21,14 @@ include_directories(
 file(GLOB_RECURSE FISHBOT_SRC "src/*.cpp")
 file(GLOB_RECURSE FISHBOT_MAIN_SRC "src/main.cpp")
 # 添加测试文件
-file(GLOB_RECURSE FISHBOT_TESTS "src/*_test.cpp")
+file(GLOB_RECURSE FISHBOT_TESTS "tests/*_test.cpp")
 # 从资源文件中移除所有的单元测试文件
-list(REMOVE_ITEM FISHBOT_SRC ${FISHBOT_TESTS})
+# list(REMOVE_ITEM FISHBOT_SRC ${FISHBOT_TESTS})
+
 # 测试所需资源文件
 file(GLOB_RECURSE FISHBOT_TEST_SRC "src/*.cpp")
 list(REMOVE_ITEM FISHBOT_TEST_SRC ${FISHBOT_MAIN_SRC})
+
 # 库文件
 file(GLOB_RECURSE FISHBOT_LIB_SRC "src/*.cpp")
 list(REMOVE_ITEM FISHBOT_LIB_SRC ${FISHBOT_MAIN_SRC} ${FISHBOT_TESTS})

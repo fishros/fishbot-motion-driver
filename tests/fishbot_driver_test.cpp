@@ -18,7 +18,6 @@ TEST(TestFishBotDriver, TestReadFrame) {
   proto_config.serial_baut_ = 115200;
   proto_config.serial_address_ = "/dev/ttySttyUSB012";
   fishbot_config.protocol_config_ = proto_config;
-
   FishBotDriver fishbot_driver(fishbot_config);
   // fishbot_driver.UpdateData();
   sleep(3);

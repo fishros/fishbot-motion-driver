@@ -20,17 +20,17 @@ TEST(TestProtoDataFrame, TestDataParse) {
       26 - 1);
   std::vector<ProtoDataFrame> data_frames =
       ProtoDataFrame::ParseDataFrame(data);
-  EXPECT_FLOAT_EQ(data_frames.size(), 0x02);
-  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_id, 0x01);
-  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_direction, 0x01);
-  EXPECT_FLOAT_EQ(data_frames[0].GetHeader().data_len, 0x08);
+  EXPECT_EQ(data_frames.size(), 0x02);
+  EXPECT_EQ(data_frames[0].GetHeader().data_id, 0x01);
+  EXPECT_EQ(data_frames[0].GetHeader().data_direction, 0x01);
+  EXPECT_EQ(data_frames[0].GetHeader().data_len, 0x08);
 
   proto_motor_encoder_data_t encoder0 =
       data_frames[0].GetData<proto_motor_encoder_data_t>();
-  EXPECT_FLOAT_EQ(encoder0.motor_encoder[0], 0x00);
+  EXPECT_EQ(encoder0.motor_encoder[0], 0x00);
   proto_motor_encoder_data_t encoder1 =
       data_frames[1].GetData<proto_motor_encoder_data_t>();
-  EXPECT_FLOAT_EQ(encoder1.motor_encoder[0], 513);
+  EXPECT_EQ(encoder1.motor_encoder[0], 513);
 
   // EncoderDataFrame* ef = static_cast<EncoderDataFrame*>(&data_frames[0]);
   // EXPECT_FLOAT_EQ(ef->encoder_data_.motor_encoder[0], 0x00);
@@ -40,11 +40,11 @@ TEST(TestProtoDataFrame, TestStructHeader) {
   using namespace fishbot::driver;  // NOLINT
   proto_data_header_t header;
   std::memcpy(reinterpret_cast<uint8_t*>(&header), "\x01\x08\x00\x01", 4);
-  EXPECT_FLOAT_EQ(header.data_id, 0x01);
-  EXPECT_FLOAT_EQ(header.data_direction, 0x01);
-  EXPECT_FLOAT_EQ(header.data_len, 0x08);
+  EXPECT_EQ(header.data_id, 0x01);
+  EXPECT_EQ(header.data_direction, 0x01);
+  EXPECT_EQ(header.data_len, 0x08);
 
-  EXPECT_FLOAT_EQ(sizeof(proto_data_header_t), 0x08);
+  EXPECT_EQ(sizeof(proto_data_header_t), 0x04);
 }
 
 TEST(TestProtoDataFrame, TestStructHeader2Str) {
@@ -62,5 +62,5 @@ TEST(TestProtoDataFrame, TestStructEncoder) {
   proto_motor_encoder_data_t data;
   std::memcpy(reinterpret_cast<uint8_t*>(&data), "\x01\x08\x00\x01", 4);
 
-  EXPECT_FLOAT_EQ(sizeof(proto_data_header_t), 0x04);
+  EXPECT_EQ(sizeof(proto_data_header_t), 0x04);
 }

@@ -86,10 +86,12 @@ typedef struct {
  * @brief IMU数据结构体
  *
  */
-typedef struct {
-  float accel[3];  // 加速度
-  float gyro[3];   // 重力加速度
-  float quat[4];   // 四元数 xyzw
-} proto_imu_data_t;
+typedef struct
+{
+    float accel[3]; // 加速度
+    float gyro[3];  // 重力加速度
+    float euler[3]; // 欧拉角 RPY
+} __attribute__((packed))  proto_imu_data_t;
+
 
 #endif  // _PROTO_V1_0_0_220621_H_

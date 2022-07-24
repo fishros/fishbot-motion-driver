@@ -55,7 +55,7 @@ void FishBotDriver::UpdateData() {
       ProtoFrame frame = recv_queue_.front();
       recv_queue_.pop();
       frame_count_++;
-      // printf("index:%d\n", frame.frame_index_);
+      printf("index:%d\n", frame.frame_index_);
       for (ProtoDataFrame data_frame : frame.data_frames_) {
         if (data_frame.GetDataId() == DATA_ENCODER) {
           // std::cout << "motor_encoder:"
@@ -67,8 +67,12 @@ void FishBotDriver::UpdateData() {
           // call odom update pose
           // if register odom callback , call
         }
+        else if(data_frame.GetDataId() == DATA_IMU)
+        {
+          std::cout<<data_frame.GetData<proto_imu_data_t>().euler[2]<<std::endl;
+        }
       }
-      // printf("frame_conut=%d\n", frame_count_);
+      printf("frame_conut=%d\n", frame_count_);
     }
 
     if (!send_queue_.empty()) {

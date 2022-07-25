@@ -11,20 +11,9 @@ namespace fishbot {
 namespace driver {
 
 FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
+  using namespace fish_protocol;  // NOLINT
   fishbot_config_ = fishbot_config;
-  switch (fishbot_config.protocol_config_.protocol_type_) {
-    case PROTOCOL_TYPE::SERIAL:
-      protocol_ =
-          std::make_shared<SerialProtocol>(fishbot_config.protocol_config_);
-      break;
-    case PROTOCOL_TYPE::UDP_SERVER:
-      protocol_ =
-          std::make_shared<UdpServerProtocol>(fishbot_config.protocol_config_);
-      break;
-    default:
-      break;
-  }
-
+  protocol_ = GetProtocolByConfig(fishbot_config.protocol_config_);
   protocol_->SetDataRecvCallback([this](const std::string raw_data) -> void {
     this->frame_buffer_.PushRawData(raw_data);
     ProtoFrame base_frame;
@@ -66,10 +55,9 @@ void FishBotDriver::UpdateData() {
           // call motor update current speed
           // call odom update pose
           // if register odom callback , call
-        }
-        else if(data_frame.GetDataId() == DATA_IMU)
-        {
-          std::cout<<data_frame.GetData<proto_imu_data_t>().euler[2]<<std::endl;
+        } else if (data_frame.GetDataId() == DATA_IMU) {
+          std::cout << data_frame.GetData<proto_imu_data_t>().euler[2]
+                    << std::endl;
         }
       }
       printf("frame_conut=%d\n", frame_count_);

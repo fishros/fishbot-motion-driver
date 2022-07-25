@@ -5,11 +5,9 @@
  * @date 2022-07-17
  * @copyright 版权所有：FishBot Open Source Organization
  */
-// #include "fishbot/driver/communicate/serial_communicate.h"
 #include <iostream>
 int main(int argc, char *argv[]) {
-  // SerialCommunicate s("/dev/ttyUSB0");
-  // sleep(1000);
+  // 根据参数输出一些数据
   std::cout << "test main" << std::endl;
   return 0;
 }

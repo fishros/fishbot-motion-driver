@@ -12,6 +12,7 @@
 
 TEST(TestFishBotDriver, TestReadUdpFrame) {
   using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;  // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -25,6 +26,7 @@ TEST(TestFishBotDriver, TestReadUdpFrame) {
 
 TEST(TestFishBotDriver, TestReadSerialFrame) {
   using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;  // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -38,6 +40,7 @@ TEST(TestFishBotDriver, TestReadSerialFrame) {
 
 TEST(TestFishBotDriver, TestReadSerialEncoder) {
   using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;  // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -51,6 +54,7 @@ TEST(TestFishBotDriver, TestReadSerialEncoder) {
 
 TEST(TestFishBotDriver, TestSendSpeed) {
   using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;  // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -71,6 +75,7 @@ TEST(TestFishBotDriver, TestSendSpeed) {
 
 TEST(TestFishBotDriver, TestSendSpeedByUDP) {
   using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;  // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;

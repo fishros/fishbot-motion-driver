@@ -8,14 +8,14 @@
 #ifndef _FISHBOT_DRIVER_FISHBOT_CONFIG_H_
 #define _FISHBOT_DRIVER_FISHBOT_CONFIG_H_
 
-#include "fishbot/driver/protocol/protocol_define.h"
+#include "fish_protocol/fish_protocol.h"
 
 namespace fishbot {
 namespace driver {
 
 class FishBotConfig {
  public:
-  ProtocolConfig protocol_config_;
+  fish_protocol::ProtocolConfig protocol_config_;
   FishBotConfig& operator=(const FishBotConfig& fishbot_config) {
     protocol_config_ = fishbot_config.protocol_config_;
     return *this;

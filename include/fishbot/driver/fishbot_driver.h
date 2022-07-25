@@ -16,9 +16,7 @@
 #include "fishbot/driver/app_protocol/frame_buffer.h"
 #include "fishbot/driver/fishbot_config.h"
 #include "fishbot/driver/modules/motor/motor.h"
-#include "fishbot/driver/protocol/base_protocol.h"
-#include "fishbot/driver/protocol/serial_protocol.h"
-#include "fishbot/driver/protocol/udp_server_protocol.h"
+#include "fish_protocol/fish_protocol.h"
 
 namespace fishbot {
 namespace driver {
@@ -26,7 +24,7 @@ namespace driver {
 class FishBotDriver {
  private:
   FishBotConfig fishbot_config_;            // 机器人配置
-  std::shared_ptr<BaseProtocol> protocol_;  // 通信协议
+  std::shared_ptr<fish_protocol::FishProtocol> protocol_;  // 通信协议
   FrameBuffer frame_buffer_;                // 原始数据缓存池
   std::thread deal_frame_thread_;           // 数据帧处理&回调线程？
   std::atomic<bool> exit_flag_{false};      // 退出标志

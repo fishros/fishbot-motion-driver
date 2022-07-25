@@ -4,8 +4,13 @@
 
 ## 编译与安装
 
+安装依赖：
+
 ```
 sudo apt install libboost-dev libgtest-dev
+git clone https://gh.api.99988866.xyz/https://github.com/fishros/fish_protocol.git 
+cd fish_protocol && mkdir build  && cd build
+cmake .. && sudo make install # 将安装到系统库
 ```
 
 ## 工程结构设计

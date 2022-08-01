@@ -29,7 +29,7 @@ class Motor {
   ~Motor() = default;
 
  public:
-  void UpdateEncoder(int32_t encoder_data[]);
+  void UpdateEncoder(const std::vector<int32_t> encoder);
   void SendSpeed(const float& linear_speed, const float& angular_speed);
   void SendMotorSpeed(int motor_id, const float& speed);
 };

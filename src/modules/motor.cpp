@@ -12,7 +12,7 @@ namespace driver {
 
 void Motor::SendMotorSpeed(int motor_id, const float& speed) {
   ProtoDataFrame data_frame;
-  motor_speed_ctrl_.motor_speed[motor_id] = speed * 1000;  // mm/s -> m/s
+  motor_speed_ctrl_.motor_speed[motor_id] = speed * 1000;  // rau/s->rau/ms
   data_frame.UpdateDataHeader(DATA_SPEED);
   data_frame.UpdateData<proto_motor_speed_ctrl_data_t>(motor_speed_ctrl_);
   // ProtoFrame

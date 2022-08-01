@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/fishbot_motion_driver_test",
             "args": [
-                "--gtest_filter=TestFishBotDriver.TestReadUdpFrame",
+                "--gtest_filter=TestMotionModel.TestDiffModel",
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

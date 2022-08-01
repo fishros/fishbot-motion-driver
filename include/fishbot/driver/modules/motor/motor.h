@@ -21,6 +21,10 @@ class Motor {
  private:
   std::queue<ProtoFrame>* send_frame_queue_;
   proto_motor_speed_ctrl_data_t motor_speed_ctrl_;
+  std::vector<double> current_speeds_;
+  double last_update_time_;
+  double motor_reduce_scale_{3293}; /*电机脉冲比，转一圈编码器所产生的脉冲数量*/
+  std::vector<int32_t> last_encoder_;
 
  public:
   Motor(std::queue<ProtoFrame>& send_frame_queue) {
@@ -29,8 +33,16 @@ class Motor {
   ~Motor() = default;
 
  public:
-  void UpdateEncoder(const std::vector<int32_t> encoder);
-  void SendSpeed(const float& linear_speed, const float& angular_speed);
+  void UpdateMotorParam(const double& motor_reduce_scale);
+  void UpdateEncoder(const std::vector<int32_t> encoder, const double& time);
+
+  /**
+   * @brief 获取电机的速度
+   *
+   * @param speed 速度数据
+   */
+  void GetMotorSpeed(std::vector<double>& speed);
+  void SendSpeed(std::vector<double>& speed);
   void SendMotorSpeed(int motor_id, const float& speed);
 };
 

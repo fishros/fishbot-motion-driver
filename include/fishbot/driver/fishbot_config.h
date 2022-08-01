@@ -9,6 +9,7 @@
 #define _FISHBOT_DRIVER_FISHBOT_CONFIG_H_
 
 #include "fish_protocol/fish_protocol.h"
+#include "fishbot/driver/algorithm/motion/motion_model.h"
 
 namespace fishbot {
 namespace driver {
@@ -16,8 +17,11 @@ namespace driver {
 class FishBotConfig {
  public:
   fish_protocol::ProtocolConfig protocol_config_;
+  MotionModelConfig motion_model_config_;
+
   FishBotConfig& operator=(const FishBotConfig& fishbot_config) {
     protocol_config_ = fishbot_config.protocol_config_;
+    motion_model_config_ = fishbot_config.motion_model_config_;
     return *this;
   };
 

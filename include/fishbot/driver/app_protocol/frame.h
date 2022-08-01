@@ -43,6 +43,7 @@ class ProtoFrame {
    */
   std::string GetEscapeRawData();
   static uint8_t GetSendFrameIndex();
+  
 
  public:
   ProtoFrame(const std::vector<ProtoDataFrame> data_frames);

@@ -7,6 +7,7 @@
  */
 
 #include "fishbot/driver/algorithm/motion/diff2_model.h"
+
 #include <cmath>
 #include <vector>
 
@@ -49,18 +50,19 @@ bool Diff2MotionModel::GetSpeedData(fishbot_speed_t &speed) {
 }
 
 bool Diff2MotionModel::RobotSpeed2MotorSpeed(const fishbot_speed_t &speed,
-                                             std::vector<double>& motor_speed) {
+                                             std::vector<double> &motor_speed) {
   motor_speed.resize(2);
   motor_speed[0] =
       speed.linear - (speed.angular * motion_config_.diff2_distance) / 2.0;
   motor_speed[1] =
       speed.linear + (speed.angular * motion_config_.diff2_distance) / 2.0;
 
-  for (uint32_t i = 0; i < motor_speed.size(); i++) {
-    motor_speed[i] /= motion_config_.diff2_radius; // w = v /r;
-  }
+  // 当前仅支持直接发送轮子速度v
+  // for (uint32_t i = 0; i < motor_speed.size(); i++) {
+  //   motor_speed[i] /= motion_config_.diff2_radius;  // w = v /r;
+  // }
   return true;
 }
 
-} // namespace driver
-} // namespace fishbot
+}  // namespace driver
+}  // namespace fishbot

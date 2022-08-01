@@ -60,8 +60,8 @@ void FishBotDriver::SetFishBotSpeed(const double& linear,
 
 void FishBotDriver::UpdateData() {
   uint32_t frame_count_ = 0;
-  auto current_time = std::chrono::system_clock::now();
-  auto last_time = std::chrono::system_clock::now();
+  auto current_time = std::chrono::steady_clock::now();
+  auto last_time = std::chrono::steady_clock::now();
   float delta_time =
       std::chrono::duration<double>(current_time - last_time).count();
   while (!exit_flag_.load()) {
@@ -69,7 +69,7 @@ void FishBotDriver::UpdateData() {
       ProtoFrame frame = recv_queue_.front();
       recv_queue_.pop();
       frame_count_++;
-      current_time = std::chrono::system_clock::now();
+      current_time = std::chrono::steady_clock::now();
       delta_time =
           std::chrono::duration<double>(current_time - last_time).count();
       printf("index:%d\n", frame.frame_index_);

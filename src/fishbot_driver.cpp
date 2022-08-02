@@ -75,7 +75,6 @@ void FishBotDriver::UpdateData() {
       current_time = std::chrono::steady_clock::now();
       delta_time =
           std::chrono::duration<double>(current_time - last_time).count();
-      printf("index:%d\n", frame.frame_index_);
       for (ProtoDataFrame data_frame : frame.data_frames_) {
         if (data_frame.GetDataId() == DATA_ENCODER) {
           // std::cout << "motor_encoder:"
@@ -106,12 +105,11 @@ void FishBotDriver::UpdateData() {
           //           << fishbot_odom.y << "," << fishbot_odom.yaml << ")"
           //           << std::endl;
         } else if (data_frame.GetDataId() == DATA_IMU) {
-          std::cout << data_frame.GetData<proto_imu_data_t>().euler[2]
-                    << std::endl;
+          // std::cout << data_frame.GetData<proto_imu_data_t>().euler[2]
+          //           << std::endl;
         }
       }
       last_time = current_time;
-      printf("frame_conut=%d\n", frame_count_);
     }
 
     if (!send_queue_.empty()) {

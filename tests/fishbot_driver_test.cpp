@@ -105,7 +105,7 @@ TEST(TestFishBotDriver, TestCalcuteMotorSpeed) {
   fishbot_config.protocol_config_ = proto_config;
   FishBotDriver fishbot_driver(fishbot_config);
   sleep(1);
-  fishbot_driver.GetMotor()->SendMotorSpeed(0, static_cast<float>(30) / 100);
+  fishbot_driver.GetMotor()->SendMotorSpeed(0, -static_cast<float>(30) / 100);
   fishbot_driver.GetMotor()->SendMotorSpeed(1, -static_cast<float>(30) / 100);
   sleep(10);
   fishbot_driver.GetMotor()->SendMotorSpeed(0, 0.00);
@@ -162,7 +162,43 @@ TEST(TestFishBotDriver, TestMotionModelForawrd) {
 
   FishBotDriver fishbot_driver(fishbot_config);
   sleep(1);
-  fishbot_driver.SetFishBotSpeed(0.0, 3.1415926/2.0);
+  fishbot_driver.SetFishBotSpeed(0.0, 1.0);
+  sleep(4);
+  fishbot_driver.SetFishBotSpeed(0.0, 0.0);
+
+  fishbot_odom_t odom;
+  fishbot_speed_t speed;
+  fishbot_driver.GetOdom(odom, speed);
+  EXPECT_NEAR(odom.yaml, 1.57 * 4, 0.1);
+  sleep(1);
+}
+
+TEST(TestFishBotDriver, TestMotionModelOdomCallback) {
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
+  FishBotConfig fishbot_config;
+  ProtocolConfig proto_config;
+  proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
+  proto_config.udp_server_ip_ = "0.0.0.0";
+  proto_config.udp_server_port_ = 3474;
+  fishbot_config.protocol_config_ = proto_config;
+
+  MotionModelConfig motion_model_config;
+  motion_model_config.model_name = "diff2";
+  motion_model_config.diff2_distance = 0.170;
+  motion_model_config.diff2_pulse = 3293;
+  motion_model_config.diff2_radius = 0.065 / 2;
+  fishbot_config.motion_model_config_ = motion_model_config;
+
+  FishBotDriver fishbot_driver(fishbot_config);
+
+  fishbot_driver.SetOdomCallback(
+      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void {
+        std::cout << odom.x << " " << odom.y << " " << odom.yaml << std::endl;
+      });
+
+  sleep(1);
+  fishbot_driver.SetFishBotSpeed(0.0, 3.1415926 / 2.0);
   sleep(4);
   fishbot_driver.SetFishBotSpeed(0.0, 0.0);
 

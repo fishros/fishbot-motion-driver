@@ -44,7 +44,6 @@ void Motor::UpdateEncoder(const std::vector<int32_t> encoder,
 
   for (uint16_t i = 0; i < encoder.size(); i++) {
     int32_t count = encoder[i] - last_encoder_[i];
-    std::cout << "delta_time:" << delta_time << " count:" << count << std::endl;
     current_speeds_[i] = static_cast<double>(count) * 2 * PI /
                          (motor_reduce_scale_ * delta_time);
     last_encoder_[i] = encoder[i];

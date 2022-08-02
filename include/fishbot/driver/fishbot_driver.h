@@ -11,6 +11,7 @@
 #include <memory>
 #include <queue>
 #include <thread>
+#include <functional>
 
 #include "fish_protocol/fish_protocol.h"
 #include "fishbot/driver/algorithm/motion/diff2_model.h"
@@ -30,11 +31,12 @@ class FishBotDriver {
   std::thread deal_frame_thread_;       // 数据帧处理&回调线程
   std::atomic<bool> exit_flag_{false};  // 退出标志
   std::shared_ptr<Diff2MotionModel> motion_model_;  // 运动模型
+  /*callback*/
+  std::function<void(const fishbot_odom_t&,const fishbot_speed_t&)> odom_callback_;
 
  public:
   std::queue<ProtoFrame> recv_queue_;  // 数据帧接收缓存队列
   std::queue<ProtoFrame> send_queue_;  // 数据帧发送缓存队列
-  // Motor motor_;                         // 电机数据处理类
   MotorSharedPtr motor_ptr_;
 
  public:
@@ -43,13 +45,10 @@ class FishBotDriver {
 
  public:
   void UpdateData();
-  void GetOdom(fishbot_odom_t& odom, fishbot_speed_t& speed);
   void SetFishBotSpeed(const double& linear, const double& angular);
-  /*
-    SetSpeed(linear,angle)
-    xyz,rxryrz = GetOdom()
-    GetImu()
-  */
+
+  void GetOdom(fishbot_odom_t& odom, fishbot_speed_t& speed);
+  void SetOdomCallback(const std::function<void(const fishbot_odom_t&,const fishbot_speed_t&)> &odom_callback);
 
   /*
     ResetOdom()

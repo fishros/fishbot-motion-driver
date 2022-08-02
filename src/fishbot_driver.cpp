@@ -10,8 +10,8 @@
 namespace fishbot {
 namespace driver {
 
-FishBotDriver::FishBotDriver(const FishBotConfig& fishbot_config) {
-  using namespace fish_protocol;  // NOLINT
+FishBotDriver::FishBotDriver(const FishBotConfig &fishbot_config) {
+  using namespace fish_protocol; // NOLINT
   fishbot_config_ = fishbot_config;
   protocol_ = GetProtocolByConfig(fishbot_config.protocol_config_);
   protocol_->SetDataRecvCallback([this](const std::string raw_data) -> void {
@@ -42,13 +42,13 @@ FishBotDriver::~FishBotDriver() {
 
 MotorSharedPtr FishBotDriver::GetMotor() { return motor_ptr_; }
 
-void FishBotDriver::GetOdom(fishbot_odom_t& odom, fishbot_speed_t& speed) {
+void FishBotDriver::GetOdom(fishbot_odom_t &odom, fishbot_speed_t &speed) {
   motion_model_->GetSpeedData(speed);
   motion_model_->GetOdomData(odom);
 }
 
-void FishBotDriver::SetFishBotSpeed(const double& linear,
-                                    const double& angular) {
+void FishBotDriver::SetFishBotSpeed(const double &linear,
+                                    const double &angular) {
   fishbot_speed_t speed = {
       .linear = linear,
       .angular = angular,
@@ -62,8 +62,11 @@ void FishBotDriver::UpdateData() {
   uint32_t frame_count_ = 0;
   auto current_time = std::chrono::steady_clock::now();
   auto last_time = std::chrono::steady_clock::now();
+  fishbot_speed_t fishbot_speed;
+  fishbot_odom_t fishbot_odom;
   float delta_time =
       std::chrono::duration<double>(current_time - last_time).count();
+
   while (!exit_flag_.load()) {
     if (!recv_queue_.empty()) {
       ProtoFrame frame = recv_queue_.front();
@@ -93,11 +96,12 @@ void FishBotDriver::UpdateData() {
           motion_model_->UpdateMotorSpeeds(motor_speed, delta_time);
 
           // 3.if register odom callback , call
-          fishbot_speed_t fishbot_speed;
-          fishbot_odom_t fishbot_odom;
+
           motion_model_->GetSpeedData(fishbot_speed);
           motion_model_->GetOdomData(fishbot_odom);
-
+          if (odom_callback_) {
+            odom_callback_(fishbot_odom, fishbot_speed);
+          }
           // std::cout << "fishbot_odom(" << fishbot_odom.x << ","
           //           << fishbot_odom.y << "," << fishbot_odom.yaml << ")"
           //           << std::endl;
@@ -115,6 +119,12 @@ void FishBotDriver::UpdateData() {
       send_queue_.pop();
     }
   }
+}
+
+void FishBotDriver::SetOdomCallback(
+    const std::function<void(const fishbot_odom_t &, const fishbot_speed_t &)>
+        &odom_callback) {
+  odom_callback_ = odom_callback;
 }
 
 }  // namespace driver

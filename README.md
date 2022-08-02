@@ -13,6 +13,13 @@ cd fish_protocol && mkdir build  && cd build
 cmake .. && sudo make install # 将安装到系统库
 ```
 
+
+```
+git clone https://gh.api.99988866.xyz/https://github.com/fishros/fishbot-motion-driver.git -b v1.0.0.20220717
+cd fish_protocol && mkdir build  && cd build
+cmake .. && sudo make install
+```
+
 ## 工程结构设计
 
 总体架构

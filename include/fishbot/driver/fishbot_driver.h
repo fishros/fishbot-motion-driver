@@ -19,6 +19,7 @@
 #include "fishbot/driver/app_protocol/frame_buffer.h"
 #include "fishbot/driver/fishbot_config.h"
 #include "fishbot/driver/modules/motor/motor.h"
+#include "fishbot/driver/modules/device.h"
 
 namespace fishbot {
 namespace driver {
@@ -38,32 +39,21 @@ class FishBotDriver {
   std::queue<ProtoFrame> recv_queue_;  // 数据帧接收缓存队列
   std::queue<ProtoFrame> send_queue_;  // 数据帧发送缓存队列
   MotorSharedPtr motor_ptr_;
+  DeviceSharedPtr device_ptr_;
 
  public:
   FishBotDriver(const FishBotConfig& fishbot_config);
   ~FishBotDriver();
 
  public:
+
   void UpdateData();
+  MotorSharedPtr GetMotor();
   void SetFishBotSpeed(const double& linear, const double& angular);
 
   void GetOdom(fishbot_odom_t& odom, fishbot_speed_t& speed);
   void SetOdomCallback(const std::function<void(const fishbot_odom_t&,const fishbot_speed_t&)> &odom_callback);
 
-  /*
-    ResetOdom()
-    UpdateConfig()
-    GetPose()
-    GetSpeed()
-  */
-  void Odom();
-
-  /*
-    GetImu()
-    GetMotion()
-    Calibration()
-  */
-  void IMU();
 
   /*
     SetSpeed(linear,angle)
@@ -71,7 +61,8 @@ class FishBotDriver {
     UpdateRawData();
     UpdateMotorConfig(int id,pid+tick_scale);
   */
-  MotorSharedPtr GetMotor();
+  void Restart(void);
+  DeviceSharedPtr GetDevice(void);
 };
 
 }  // namespace driver

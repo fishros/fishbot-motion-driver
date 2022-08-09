@@ -28,6 +28,8 @@ FishBotDriver::FishBotDriver(const FishBotConfig &fishbot_config) {
   /* 运动学部分 */
   motion_model_ = std::make_shared<Diff2MotionModel>();
   motion_model_->UpdateParams(fishbot_config_.motion_model_config_);
+  /*设备控制*/
+  device_ptr_ = std::make_shared<Device>(send_queue_);
 
   deal_frame_thread_ = std::thread(std::bind(&FishBotDriver::UpdateData, this));
 }
@@ -36,8 +38,21 @@ FishBotDriver::~FishBotDriver() {
   exit_flag_.store(true);
   deal_frame_thread_.join();
   if (protocol_) {
+    std::cout<<"destory"<<std::endl;
     protocol_->ProtocolDestory();
   }
+}
+
+
+void FishBotDriver::Restart(void)
+{
+  device_ptr_->Restart();
+}
+
+
+DeviceSharedPtr FishBotDriver::GetDevice(void)
+{
+  return device_ptr_;
 }
 
 MotorSharedPtr FishBotDriver::GetMotor() { return motor_ptr_; }

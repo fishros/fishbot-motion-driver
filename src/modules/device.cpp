@@ -20,5 +20,17 @@ void Device::Restart(void)
   send_frame_queue_->push(frame);
 }
 
+void Device::SetWifiConfig(const proto_data_wifi_config_t& proto_data_wifi_config)
+{
+  ProtoDataFrame data_frame;
+  data_frame.UpdateDataHeader(DATA_WIFI_CONFIG);
+  proto_data_wifi_config_.mode = proto_data_wifi_config.mode;
+  strcpy(proto_data_wifi_config_.ssid,proto_data_wifi_config.ssid);
+  strcpy(proto_data_wifi_config_.password,proto_data_wifi_config.password);
+  data_frame.UpdateData<proto_data_wifi_config_t>(proto_data_wifi_config_);
+  ProtoFrame frame({data_frame});
+  send_frame_queue_->push(frame);
+}
+
 }  // namespace driver
 }  // namespace fishbot

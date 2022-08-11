@@ -92,8 +92,7 @@ int inverse_escape_frame(const uint8_t *frame, uint8_t *result, int len) {
 
 void print_frame_to_hex(const char *title, const char *buffer, uint16_t size) {
   int i;
-  printf("*************************start %s*******************************\n",
-         title);
+  printf("*************************start %s*******************************\n",title);
   for (i = 1; i <= size; i++) {
     printf("0x%02X ", (uint8_t)buffer[i - 1]);
     if (i % 16 == 0) {

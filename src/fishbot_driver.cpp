@@ -38,7 +38,6 @@ FishBotDriver::~FishBotDriver() {
   exit_flag_.store(true);
   deal_frame_thread_.join();
   if (protocol_) {
-    std::cout<<"destory"<<std::endl;
     protocol_->ProtocolDestory();
   }
 }
@@ -129,6 +128,7 @@ void FishBotDriver::UpdateData() {
 
     if (!send_queue_.empty()) {
       protocol_->ProtocolSendRawData(send_queue_.front().GetEscapeRawData());
+      std::cout<<send_queue_.front().GetEscapeRawData()<<std::endl;
       send_queue_.pop();
     }
   }

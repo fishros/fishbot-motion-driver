@@ -126,10 +126,10 @@ typedef enum
  */
 typedef struct
 {
-  wifi_mode_t wifi_mode;
+  wifi_mode_t mode;
   char ssid[16];
   char password[24];
-} __attribute__((packed)) proto_wifi_config_t;
+} __attribute__((packed)) proto_data_wifi_config_t;
 
 /**************************************设备控制数据结构*******************************************/
 /**

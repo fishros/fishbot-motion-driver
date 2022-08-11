@@ -21,6 +21,7 @@ class Device {
  private:
   std::queue<ProtoFrame>* send_frame_queue_;
   proto_device_control_t device_control_;
+  proto_data_wifi_config_t proto_data_wifi_config_; 
 
  public:
   Device(std::queue<ProtoFrame>& send_frame_queue) {
@@ -30,6 +31,7 @@ class Device {
 
  public:
   void Restart(void);
+  void SetWifiConfig(const proto_data_wifi_config_t& proto_data_wifi_config);
 };
 
 typedef std::shared_ptr<Device> DeviceSharedPtr;

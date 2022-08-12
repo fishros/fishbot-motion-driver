@@ -10,8 +10,7 @@
 
 #include "gtest/gtest.h"
 
-TEST(TestFishBotDriver, TestReadUdpFrame)
-{
+TEST(TestFishBotDriver, TestReadUdpFrame) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -25,8 +24,7 @@ TEST(TestFishBotDriver, TestReadUdpFrame)
   sleep(10);
 }
 
-TEST(TestFishBotDriver, TestReadSerialFrame)
-{
+TEST(TestFishBotDriver, TestReadSerialFrame) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -40,8 +38,7 @@ TEST(TestFishBotDriver, TestReadSerialFrame)
   sleep(3);
 }
 
-TEST(TestFishBotDriver, TestReadSerialEncoder)
-{
+TEST(TestFishBotDriver, TestReadSerialEncoder) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -55,8 +52,7 @@ TEST(TestFishBotDriver, TestReadSerialEncoder)
   sleep(2);
 }
 
-TEST(TestFishBotDriver, TestSendSpeed)
-{
+TEST(TestFishBotDriver, TestSendSpeed) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -68,8 +64,7 @@ TEST(TestFishBotDriver, TestSendSpeed)
 
   FishBotDriver fishbot_driver(fishbot_config);
 
-  for (int i = 0; i < 0.3 * 100; i++)
-  {
+  for (int i = 0; i < 0.3 * 100; i++) {
     fishbot_driver.GetMotor()->SendMotorSpeed(0, static_cast<float>(i) / 100);
     fishbot_driver.GetMotor()->SendMotorSpeed(1, 0.001);
     sleep(1);
@@ -78,8 +73,7 @@ TEST(TestFishBotDriver, TestSendSpeed)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestSendSpeedByUDP)
-{
+TEST(TestFishBotDriver, TestSendSpeedByUDP) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -90,8 +84,7 @@ TEST(TestFishBotDriver, TestSendSpeedByUDP)
   fishbot_config.protocol_config_ = proto_config;
   FishBotDriver fishbot_driver(fishbot_config);
 
-  for (int i = 0; i < 0.3 * 100; i++)
-  {
+  for (int i = 0; i < 0.3 * 100; i++) {
     fishbot_driver.GetMotor()->SendMotorSpeed(0, static_cast<float>(i) / 100);
     fishbot_driver.GetMotor()->SendMotorSpeed(1, -static_cast<float>(i) / 100);
     sleep(1);
@@ -101,8 +94,7 @@ TEST(TestFishBotDriver, TestSendSpeedByUDP)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestCalcuteMotorSpeed)
-{
+TEST(TestFishBotDriver, TestCalcuteMotorSpeed) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -121,8 +113,7 @@ TEST(TestFishBotDriver, TestCalcuteMotorSpeed)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestOdomCalculate)
-{
+TEST(TestFishBotDriver, TestOdomCalculate) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -152,8 +143,7 @@ TEST(TestFishBotDriver, TestOdomCalculate)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestMotionModelForawrd)
-{
+TEST(TestFishBotDriver, TestMotionModelForawrd) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -183,8 +173,7 @@ TEST(TestFishBotDriver, TestMotionModelForawrd)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestMotionModelOdomCallback)
-{
+TEST(TestFishBotDriver, TestMotionModelOdomCallback) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -204,8 +193,7 @@ TEST(TestFishBotDriver, TestMotionModelOdomCallback)
   FishBotDriver fishbot_driver(fishbot_config);
 
   fishbot_driver.SetOdomCallback(
-      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void
-      {
+      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void {
         std::cout << odom.x << " " << odom.y << " " << odom.yaml << std::endl;
       });
 
@@ -221,8 +209,7 @@ TEST(TestFishBotDriver, TestMotionModelOdomCallback)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestRestartDevice)
-{
+TEST(TestFishBotDriver, TestRestartDevice) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -241,8 +228,7 @@ TEST(TestFishBotDriver, TestRestartDevice)
   FishBotDriver fishbot_driver(fishbot_config);
 
   fishbot_driver.SetOdomCallback(
-      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void
-      {
+      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void {
         std::cout << odom.x << " " << odom.y << " " << odom.yaml << std::endl;
       });
 
@@ -257,8 +243,7 @@ TEST(TestFishBotDriver, TestRestartDevice)
   sleep(1);
 }
 
-TEST(TestFishBotDriver, TestUpdateWifiConfig)
-{
+TEST(TestFishBotDriver, TestUpdateWifiConfig) {
   using namespace fishbot::driver; // NOLINT
   using namespace fish_protocol;   // NOLINT
   FishBotConfig fishbot_config;
@@ -277,23 +262,22 @@ TEST(TestFishBotDriver, TestUpdateWifiConfig)
   FishBotDriver fishbot_driver(fishbot_config);
 
   fishbot_driver.SetOdomCallback(
-      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void
-      {
+      [](const fishbot_odom_t &odom, const fishbot_speed_t &speed) -> void {
         std::cout << odom.x << " " << odom.y << " " << odom.yaml << std::endl;
       });
 
   proto_data_wifi_config_t wifi_config = {
       .mode = WIFI_MODE_STA,
-      .ssid = "fishbot",
-      .password = "fishros.com",
+      .ssid = "JKC",
+      .password = "jkc20210106",
   };
   fishbot_driver.GetDevice()->SetWifiConfig(wifi_config);
   sleep(1);
   fishbot_driver.GetDevice()->Restart();
   sleep(10);
-  wifi_config.mode = WIFI_MODE_AP;
-  fishbot_driver.GetDevice()->SetWifiConfig(wifi_config);
-  sleep(1);
-  fishbot_driver.GetDevice()->Restart();
+  // wifi_config.mode = WIFI_MODE_AP;
+  // fishbot_driver.GetDevice()->SetWifiConfig(wifi_config);
+  // sleep(1);
+  // fishbot_driver.GetDevice()->Restart();
   sleep(10);
 }

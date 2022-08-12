@@ -11,7 +11,7 @@ namespace fishbot {
 namespace driver {
 
 FishBotDriver::FishBotDriver(const FishBotConfig &fishbot_config) {
-  using namespace fish_protocol; // NOLINT
+  using namespace fish_protocol;  // NOLINT
   fishbot_config_ = fishbot_config;
   protocol_ = GetProtocolByConfig(fishbot_config.protocol_config_);
   protocol_->SetDataRecvCallback([this](const std::string raw_data) -> void {
@@ -42,17 +42,9 @@ FishBotDriver::~FishBotDriver() {
   }
 }
 
+void FishBotDriver::Restart(void) { device_ptr_->Restart(); }
 
-void FishBotDriver::Restart(void)
-{
-  device_ptr_->Restart();
-}
-
-
-DeviceSharedPtr FishBotDriver::GetDevice(void)
-{
-  return device_ptr_;
-}
+DeviceSharedPtr FishBotDriver::GetDevice(void) { return device_ptr_; }
 
 MotorSharedPtr FishBotDriver::GetMotor() { return motor_ptr_; }
 
@@ -128,7 +120,7 @@ void FishBotDriver::UpdateData() {
 
     if (!send_queue_.empty()) {
       protocol_->ProtocolSendRawData(send_queue_.front().GetEscapeRawData());
-      std::cout<<send_queue_.front().GetEscapeRawData()<<std::endl;
+      std::cout << send_queue_.front().GetEscapeRawData() << std::endl;
       send_queue_.pop();
     }
   }
@@ -140,5 +132,5 @@ void FishBotDriver::SetOdomCallback(
   odom_callback_ = odom_callback;
 }
 
-}  // namespace driver
-}  // namespace fishbot
+}  //  namespace driver
+}  //  namespace fishbot

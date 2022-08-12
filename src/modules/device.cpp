@@ -9,8 +9,7 @@
 
 namespace fishbot {
 namespace driver {
-void Device::Restart(void)
-{
+void Device::Restart(void) {
   ProtoDataFrame data_frame;
   data_frame.UpdateDataHeader(DATA_DEV_CONTROL);
   device_control_.id = DEVICE_MOTION_CONTROL;
@@ -20,17 +19,20 @@ void Device::Restart(void)
   send_frame_queue_->push(frame);
 }
 
-void Device::SetWifiConfig(const proto_data_wifi_config_t& proto_data_wifi_config)
-{
+void Device::SetWifiConfig(
+    const proto_data_wifi_config_t &proto_data_wifi_config) {
   ProtoDataFrame data_frame;
   data_frame.UpdateDataHeader(DATA_WIFI_CONFIG);
   proto_data_wifi_config_.mode = proto_data_wifi_config.mode;
-  strcpy(proto_data_wifi_config_.ssid,proto_data_wifi_config.ssid);
-  strcpy(proto_data_wifi_config_.password,proto_data_wifi_config.password);
+  snprintf(proto_data_wifi_config_.ssid, strlen(proto_data_wifi_config.ssid),
+           "%s", proto_data_wifi_config.ssid);
+  snprintf(proto_data_wifi_config_.password,
+           strlen(proto_data_wifi_config.password), "%s",
+           proto_data_wifi_config.password);
   data_frame.UpdateData<proto_data_wifi_config_t>(proto_data_wifi_config_);
   ProtoFrame frame({data_frame});
   send_frame_queue_->push(frame);
 }
 
-}  // namespace driver
-}  // namespace fishbot
+}  //  namespace driver
+}  //  namespace fishbot

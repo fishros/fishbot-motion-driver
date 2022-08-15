@@ -11,8 +11,8 @@
 #include "gtest/gtest.h"
 
 TEST(TestFishBotDriver, TestReadUdpFrame) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -25,8 +25,8 @@ TEST(TestFishBotDriver, TestReadUdpFrame) {
 }
 
 TEST(TestFishBotDriver, TestReadSerialFrame) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -39,8 +39,8 @@ TEST(TestFishBotDriver, TestReadSerialFrame) {
 }
 
 TEST(TestFishBotDriver, TestReadSerialEncoder) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -53,8 +53,8 @@ TEST(TestFishBotDriver, TestReadSerialEncoder) {
 }
 
 TEST(TestFishBotDriver, TestSendSpeed) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -74,8 +74,8 @@ TEST(TestFishBotDriver, TestSendSpeed) {
 }
 
 TEST(TestFishBotDriver, TestSendSpeedByUDP) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -95,8 +95,8 @@ TEST(TestFishBotDriver, TestSendSpeedByUDP) {
 }
 
 TEST(TestFishBotDriver, TestCalcuteMotorSpeed) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -114,8 +114,8 @@ TEST(TestFishBotDriver, TestCalcuteMotorSpeed) {
 }
 
 TEST(TestFishBotDriver, TestOdomCalculate) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -144,8 +144,8 @@ TEST(TestFishBotDriver, TestOdomCalculate) {
 }
 
 TEST(TestFishBotDriver, TestMotionModelForawrd) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -174,8 +174,8 @@ TEST(TestFishBotDriver, TestMotionModelForawrd) {
 }
 
 TEST(TestFishBotDriver, TestMotionModelOdomCallback) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::UDP_SERVER;
@@ -210,8 +210,8 @@ TEST(TestFishBotDriver, TestMotionModelOdomCallback) {
 }
 
 TEST(TestFishBotDriver, TestRestartDevice) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -244,8 +244,8 @@ TEST(TestFishBotDriver, TestRestartDevice) {
 }
 
 TEST(TestFishBotDriver, TestUpdateWifiConfig) {
-  using namespace fishbot::driver; // NOLINT
-  using namespace fish_protocol;   // NOLINT
+  using namespace fishbot::driver;  // NOLINT
+  using namespace fish_protocol;    // NOLINT
   FishBotConfig fishbot_config;
   ProtocolConfig proto_config;
   proto_config.protocol_type_ = PROTOCOL_TYPE::SERIAL;
@@ -266,11 +266,11 @@ TEST(TestFishBotDriver, TestUpdateWifiConfig) {
         std::cout << odom.x << " " << odom.y << " " << odom.yaml << std::endl;
       });
 
-  proto_data_wifi_config_t wifi_config = {
-      .mode = WIFI_MODE_STA,
-      .ssid = "JKC",
-      .password = "jkc20210106",
-  };
+  proto_data_wifi_config_t wifi_config;
+  wifi_config.mode = WIFI_MODE_STA;
+  sprintf(wifi_config.ssid, "JKC");              // NOLINT
+  sprintf(wifi_config.password, "jkc20210106");  // NOLINT
+
   fishbot_driver.GetDevice()->SetWifiConfig(wifi_config);
   sleep(1);
   fishbot_driver.GetDevice()->Restart();

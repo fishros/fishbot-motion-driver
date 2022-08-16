@@ -30,13 +30,17 @@ void FishBotDriverPython::set_motion_model_diff2(float diff2_distance,
 
 void FishBotDriverPython::update_wifi_config_sta(std::string ssid,
                                                  std::string password) {
-  std::cout << "update wifi config:"
+  std::cout << "update wifi config :"
             << "(" << ssid << "," << password << ")" << std::endl;
   proto_data_wifi_config_t wifi_config = {
       .mode = WIFI_MODE_STA,
   };
-  snprintf(wifi_config.ssid, ssid.length(), "%s", ssid.c_str());
-  snprintf(wifi_config.password, password.length(), "%s", password.c_str());
+  snprintf(wifi_config.ssid, ssid.size() + 2, "%s", ssid.data());
+  snprintf(wifi_config.password, password.size() + 1, "%s", password.data());
+  std::cout << "update wifi config2:"
+            << "(" << wifi_config.ssid << "," << wifi_config.password << ")"
+            << std::endl;
+  sprintf(wifi_config.ssid, "%s", ssid.data());
   fishbot_driver_ptr_->GetDevice()->SetWifiConfig(wifi_config);
 }
 
@@ -53,13 +57,9 @@ bool FishBotDriverPython::init() {
   return true;
 }
 
-void FishBotDriverPython::restart()
-{
-  fishbot_driver_ptr_->Restart();
-}
+void FishBotDriverPython::restart() { fishbot_driver_ptr_->Restart(); }
 
-void FishBotDriverPython::destory()
-{
+void FishBotDriverPython::destory() {
   // fishbot_driver_ptr_->~FishBotDriver();
   fishbot_driver_ptr_ = nullptr;
 }

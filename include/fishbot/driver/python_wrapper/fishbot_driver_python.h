@@ -34,6 +34,10 @@ class FishBotDriverPython {
   /*设置wifi*/
   void update_wifi_config_sta(std::string ssid, std::string password);
   void update_wifi_config_ap();
+  /*设置协议*/
+  void update_protocol_config_uart(long baudrate);
+  void update_protocol_config_udp_server(long port);
+  void update_protocol_config_udp_client(std::string ip, long port);
 
   void restart();
   void destory();

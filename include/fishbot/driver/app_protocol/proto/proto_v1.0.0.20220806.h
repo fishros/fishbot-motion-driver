@@ -183,7 +183,7 @@ typedef enum
 typedef struct
 {
   proto_proto_mode_t mode;
-  uint16_t bautrate;
+  uint32_t bautrate;
   uint16_t port;
   char ip[16];
 } __attribute__((packed)) proto_proto_mode_config_t;

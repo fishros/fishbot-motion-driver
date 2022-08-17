@@ -35,8 +35,8 @@ void FishBotDriverPython::update_wifi_config_sta(std::string ssid,
   proto_data_wifi_config_t wifi_config = {
       .mode = WIFI_MODE_STA,
   };
-  snprintf(wifi_config.ssid, ssid.size() + 2, "%s", ssid.data());
-  snprintf(wifi_config.password, password.size() + 1, "%s", password.data());
+  sprintf(wifi_config.ssid, "%s", ssid.data());          // NOLINT
+  sprintf(wifi_config.password, "%s", password.data());  // NOLINT
   std::cout << "update wifi config2:"
             << "(" << wifi_config.ssid << "," << wifi_config.password << ")"
             << std::endl;
@@ -64,6 +64,32 @@ void FishBotDriverPython::destory() {
   fishbot_driver_ptr_ = nullptr;
 }
 
+void FishBotDriverPython::update_protocol_config_uart(long baudrate) {
+  // uint32_t bautrate = (uint32_t)baudrate;
+  proto_proto_mode_config_t config = {
+      .mode = PROTO_MODE_UART,
+      .bautrate = (uint32_t)baudrate,
+      .port = 3474,
+  };
+  fishbot_driver_ptr_->GetDevice()->SetProtoConfig(config);
+}
+void FishBotDriverPython::update_protocol_config_udp_server(long port) {
+  proto_proto_mode_config_t config = {
+      .mode = PROTO_MODE_WIFI_UDP_SERVER,
+      .port = 3474,
+  };
+  fishbot_driver_ptr_->GetDevice()->SetProtoConfig(config);
+}
+void FishBotDriverPython::update_protocol_config_udp_client(std::string ip,
+                                                            long port) {
+  proto_proto_mode_config_t config = {
+      .mode = PROTO_MODE_WIFI_UDP_CLIENT,
+      .port = (uint16_t)port,
+  };
+  sprintf(config.ip, "%s", ip.data());  // NOLINT
+  fishbot_driver_ptr_->GetDevice()->SetProtoConfig(config);
+}
+
 char const *version() { return "v1.0.0.220813"; }
 
 BOOST_PYTHON_MODULE(libfishbot) {
@@ -76,6 +102,12 @@ BOOST_PYTHON_MODULE(libfishbot) {
       .def("init", &FishBotDriverPython::init)
       .def("restart", &FishBotDriverPython::restart)
       .def("destory", &FishBotDriverPython::destory)
+      .def("update_protocol_config_uart",
+           &FishBotDriverPython::update_protocol_config_uart)
+      .def("update_protocol_config_udp_server",
+           &FishBotDriverPython::update_protocol_config_udp_server)
+      .def("update_protocol_config_udp_client",
+           &FishBotDriverPython::update_protocol_config_udp_client)
       .def("update_wifi_config_sta",
            &FishBotDriverPython::update_wifi_config_sta);
   def("version", version);

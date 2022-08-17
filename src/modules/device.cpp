@@ -33,5 +33,19 @@ void Device::SetWifiConfig(
   send_frame_queue_->push(frame);
 }
 
+void Device::SetProtoConfig(
+    const proto_proto_mode_config_t &proto_proto_mode_config) {
+  ProtoDataFrame data_frame;
+  data_frame.UpdateDataHeader(DATA_PROTO_MODE);
+  proto_proto_mode_config_.mode = proto_proto_mode_config.mode;
+  proto_proto_mode_config_.bautrate = proto_proto_mode_config.bautrate;
+  proto_proto_mode_config_.port = proto_proto_mode_config.port;
+  sprintf(proto_proto_mode_config_.ip, "%s",  // NOLINT
+          proto_proto_mode_config.ip);
+  data_frame.UpdateData<proto_proto_mode_config_t>(proto_proto_mode_config_);
+  ProtoFrame frame({data_frame});
+  send_frame_queue_->push(frame);
+}
+
 }  //  namespace driver
 }  //  namespace fishbot
